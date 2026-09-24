@@ -62,6 +62,10 @@ if ex(out / "lr_sweep_summary.csv"):
     P("### 4.6 Learning-rate sensitivity (requested 2026-09-24; decoder a, z=4, **no early stopping**, 500 epochs, seed 0, 10 folds)\n")
     P(pd.read_csv(out / "lr_sweep_summary.csv", index_col=0).round(3).to_markdown()); P()
     P("Held-out r of the final-epoch model. Validation loss rises from epoch ≈ 10–20 at lr ≥ 1e-4 (over-fitting) and never drops below its epoch-0 value by more than ≈ 0.02 at any learning rate; at lr ≤ 1e-5 the model barely moves in 500 epochs. Mean r peaks at lr = 1e-4 (0.145) but stays below the linear ridge baseline (0.174); the intercept is best learned at 1e-3, the detector weight at 1e-4. Conclusion: the learning rate is not the bottleneck — no setting between 1e-6 and 1e-3 lets the sequence encoder beat the linear baseline. Figure: `fig_lr_sweep.png`.\n")
+if ex(out / "lr_sweep_10k_summary.csv"):
+    P("### 4.7 Learning-rate sensitivity with 10,000 epochs (requested 2026-09-24; same design, no early stopping, ≈ 15 GPU-min per fold)\n")
+    P(pd.read_csv(out / "lr_sweep_10k_summary.csv", index_col=0).round(3).to_markdown()); P()
+    P("With 10,000 epochs every learning rate ≥ 1e-5 reaches near-zero training loss, and the validation loss ends **above** its starting value for every learning rate (1e-6: 1.20 vs 1.16 at its epoch-3000 minimum; 1e-5: 1.38; ≥ 3e-5: 1.39–1.45). The held-out mean r is 0.06–0.15 (best 3e-4: 0.151; 1e-3: 0.144), again below the linear ridge baseline (0.174); the intercept reaches 0.42 at 1e-3 vs 0.56 for ridge, the detector weight 0.21 vs 0.34. Long training with a small learning rate merely reproduces, more slowly, the same over-fitting trajectory. Figure: `fig_lr_sweep_10k.png`.\n")
 P("## 5. Pass/fail (pre-registered §4.3)\n")
 v = J(out / f"verdict_phase1_a_z4{SUF}.json")
 if v: P(f"- A-H1: **{'PASS' if v['A_H1_pass'] else 'FAIL'}** (criterion: mean Δr ≥ 0.10 vs condition×speed mean, mixed-model p < 0.01, and beats ridge). Observed: Δr_cond = {v['mean_delta_r_vs_cond_mean']:.3f}, Δr_ridge = {v['mean_delta_r_vs_ridge']:.3f}.")

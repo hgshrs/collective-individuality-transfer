@@ -72,16 +72,37 @@ def train_fold(D, cfg, fold, seed, decoder="a", device="cuda", out_dir: Path = N
         return fit + cfg["beta_kl"] * kl_normal(mu, lv), fit
     best, best_state, bad, hist = np.inf, None, 0, []
     bval = make_batch(D, val, std, device, decoder == "b")
-    t0 = time.time()
+    # fast path (no crop augmentation): pre-build padded GPU tensors for all training participants once per fold
+    fast = crop is None
+    if fast:
+        ball = make_batch(D, train, std, device, decoder == "b"); Tall = T(train); Wall = W(train)
+        def sub(idx):
+            b = {k: v[idx] for k, v in ball.items()}
+            if decoder == "b":
+                L = int(b["MM"].sum(1).max().item()) if b["MM"].numel() else 1; b["F"], b["Y"], b["MM"] = b["F"][:, :L], b["Y"][:, :L], b["MM"][:, :L]
+            L = int(b["L"].max().item()); b["X"] = b["X"][:, :L]
+            return b
+    def loss_fast(b, idx, sample):
+        X = b["X"]
+        if sample and in_drop > 0: X = X * (torch.rand_like(X[:, :1, :]) > in_drop).float() / (1 - in_drop)
+        mu, lv = enc(X, b["L"]); z = reparam(mu, lv, sample); w = dec(z, b["C"])
+        if decoder == "a":
+            wt = Wall[idx]; wt = wt / wt.mean(0, keepdim=True); fit = ((w - Tall[idx]) ** 2 * wt).mean()
+        else: fit = exp_nll(w, b["F"], b["Y"], b["MM"])
+        return fit + cfg["beta_kl"] * kl_normal(mu, lv), fit
+    t0 = time.time(); log_every = max(1, cfg["max_epochs"] // 1000)
     for ep in range(cfg["max_epochs"]):
         enc.train(); dec.train(); perm = rng.permutation(len(train)); tl = 0
         for i in range(0, len(train), cfg["batch_size"]):
+            if fast:
+                idx = torch.as_tensor(perm[i:i + cfg["batch_size"]], device=device); b = sub(idx)
+                loss, _ = loss_fast(b, idx, True); opt.zero_grad(); loss.backward(); opt.step(); tl += loss.item() * len(idx); continue
             ps = [train[j] for j in perm[i:i + cfg["batch_size"]]]
             b = make_batch(D, ps, std, device, decoder == "b", crop=crop, rng=rng)
             loss, _ = loss_fn(b, ps, True); opt.zero_grad(); loss.backward(); opt.step(); tl += loss.item() * len(ps)
         enc.eval(); dec.eval()
         with torch.no_grad(): vl, vfit = loss_fn(bval, val, False)
-        hist.append((ep, tl / len(train), vfit.item()))
+        if ep % log_every == 0 or ep == cfg["max_epochs"] - 1: hist.append((ep, tl / len(train), vfit.item()))
         if vfit.item() < best - 1e-5: best, bad = vfit.item(), 0; best_state = ({k: v.clone() for k, v in enc.state_dict().items()}, {k: v.clone() for k, v in dec.state_dict().items()})
         else: bad += 1
         if bad >= cfg["patience"] and not cfg.get("no_early_stop", False): break
