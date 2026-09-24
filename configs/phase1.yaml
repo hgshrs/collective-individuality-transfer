@@ -1,0 +1,19 @@
+# Phase 1 defaults (AGENT_SPEC §4.1)
+z_dim: 4
+z_dim_sensitivity: [2, 8]
+hidden: 64
+n_layers: 3
+kernel: 5
+dropout: 0.1
+lr: 0.001
+batch_size: 32
+max_epochs: 500
+patience: 40
+beta_kl: 0.001
+val_frac: 0.1          # of training participants, for early stopping (stratified by cond x speed)
+seeds: [0, 1, 2]
+n_folds: 10
+teacher: runs/brms/tracking_all_ranef.csv
+source_state: searching
+source_feats: [rot_abs, rot_signed, soc_pos, soc_mov, soc_qual_search, n_vis, dist_search]
+target_coefs: ["Intercept", "Detector", "withSocInfo1:SocPosInFOV", "withSocInfo1:SocMovDir", "withSocInfo1:SocPosInFOV:SocQual", "withSocInfo1:SocMovDir:SocQual"]

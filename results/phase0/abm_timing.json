@@ -1,0 +1,8 @@
+{
+ "sec_per_run_solo": 0.08720234268158675,
+ "sec_per_run_group5": 0.44903772036669154,
+ "procs": 4,
+ "iters_per_combo": 100,
+ "total_wall_s": 211.13559126853943,
+ "mesa_version": "2.2.4"
+}
