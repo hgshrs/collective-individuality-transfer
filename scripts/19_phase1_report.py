@@ -69,7 +69,12 @@ P("- Pipeline script bug (extra `--tag` flag) aborted the simulated-agent and IC
 P("- The `_tuned` variant was run with one seed, so its mixed-model p-values are degenerate (NaN) — its Δr and bootstrap CIs are valid.")
 P("- The CNN encoder overfits within ~10 epochs (training loss → 0.3 while validation never improves beyond epoch ≈ 5); stronger regularisation did not help. With 450 training participants and low-reliability targets, a sequence encoder has no advantage over hand-crafted summary statistics.")
 P("- A-H2 caveat: because the decoder is a smooth function of z, prediction error necessarily grows with ‖z_k − z_l‖; the informative part of the test is that z distance explains error better than the raw summary-statistic distance (it does, in the joint model), not the slope itself.\n")
-P("## 7. Unverified\n"); P("- Agreement between the EB teacher and the paper's brms estimator is only checked on a 10 % / 20 % participant subsample (`results/phase0/teacher_eb_vs_brms.csv`; pending until the subsample fit finishes). Fixed effects of the EB fit reproduce the paper's Fig 4 orderings.")
+P("## 7. Unverified / validation of the teacher\n")
+cmpf = RESULTS / "phase0" / "teacher_eb_vs_brms.csv"
+if cmpf.exists() and cmpf.stat().st_size > 1:
+    c = pd.read_csv(cmpf); P("- EB vs brms (paper code, 20 % participant subsample, 4 × 1500 iterations, R̂ ≤ 1.015, 0 divergences, 98 min) — per-participant random effects on the same 121 participants:\n"); P(md(c)); P("\n  Agreement r = 0.90–0.998 (intercept/detector ≈ 0.99; social weights ≈ 0.9). The EB teacher is therefore a close proxy for the brms posterior means on the full sample; EB shrinks social random effects slightly more (smaller SD).")
+else: P("- EB vs brms agreement: pending.")
+P("- Fixed effects of the EB fit reproduce the paper's Fig 4 orderings (see phase0_report §4.5b).")
 P("- Results are on 568 participants (search-phase available); generalisation to the 53 never-searching participants is untested.\n")
 P("## 8. Questions for the human (→ reports/questions.md)\n")
 P("1. **z source for Phase 3** (spec §4.6): recommendation = tracking-phase-derived z (default), because (a) A-H1 failed, (b) 53 participants have no search phase, (c) social-weight ceilings are low. Secondary: linear search-phase z (`z_linear_pls4_ridge_eb.csv`).")

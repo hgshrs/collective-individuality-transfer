@@ -8,9 +8,10 @@ import argparse, time, numpy as np, pandas as pd, torch
 from collective_id.paths import RUNS
 from collective_id.data import load_features
 ap = argparse.ArgumentParser(); ap.add_argument("--model", default="tracking"); ap.add_argument("--half", default="all"); ap.add_argument("--tag", default=None)
-ap.add_argument("--iters", type=int, default=4000); ap.add_argument("--device", default="cuda" if torch.cuda.is_available() else "cpu"); ap.add_argument("--lr", type=float, default=0.02)
+ap.add_argument("--iters", type=int, default=4000); ap.add_argument("--device", default="cuda" if torch.cuda.is_available() else "cpu"); ap.add_argument("--lr", type=float, default=0.02); ap.add_argument("--participants", default=None, help="CSV with a participant column: restrict the fit to these participants")
 a = ap.parse_args(); tag = a.tag or f"{a.model}_{a.half}"; out = RUNS / "eb"; out.mkdir(parents=True, exist_ok=True); dev = a.device
 d = load_features()
+if a.participants: keep = set(pd.read_csv(a.participants).participant); d = d[d.participant.isin(keep)]
 if a.half == "first": d = d[d.t < 450]
 if a.half == "second": d = d[d.t >= 450]
 if a.model == "tracking": d = d[(d.state == "tracking") & (d.no_move < 3)].copy(); q = d.soc_qual_track

@@ -315,9 +315,27 @@ Mixed-model NLL gain vs condition×speed population weights: 0.0080 nats/s (p = 
 - The CNN encoder overfits within ~10 epochs (training loss → 0.3 while validation never improves beyond epoch ≈ 5); stronger regularisation did not help. With 450 training participants and low-reliability targets, a sequence encoder has no advantage over hand-crafted summary statistics.
 - A-H2 caveat: because the decoder is a smooth function of z, prediction error necessarily grows with ‖z_k − z_l‖; the informative part of the test is that z distance explains error better than the raw summary-statistic distance (it does, in the joint model), not the slope itself.
 
-## 7. Unverified
+## 7. Unverified / validation of the teacher
 
-- Agreement between the EB teacher and the paper's brms estimator is only checked on a 10 % / 20 % participant subsample (`results/phase0/teacher_eb_vs_brms.csv`; pending until the subsample fit finishes). Fixed effects of the EB fit reproduce the paper's Fig 4 orderings.
+- EB vs brms (paper code, 20 % participant subsample, 4 × 1500 iterations, R̂ ≤ 1.015, 0 divergences, 98 min) — per-participant random effects on the same 121 participants:
+
+| comparison             | model    | coef                             |   r_eb_brms |   sd_eb |   sd_brms |   n |
+|:-----------------------|:---------|:---------------------------------|------------:|--------:|----------:|----:|
+| eb_full_vs_brms_sub20  | tracking | Detector                         |       0.988 |   0.449 |     0.455 | 121 |
+| eb_full_vs_brms_sub20  | tracking | Intercept                        |       0.975 |   0.565 |     0.552 | 121 |
+| eb_full_vs_brms_sub20  | tracking | withSocInfo1:SocMovDir           |       0.900 |   0.153 |     0.157 | 121 |
+| eb_full_vs_brms_sub20  | tracking | withSocInfo1:SocMovDir:SocQual   |       0.892 |   0.155 |     0.205 | 121 |
+| eb_full_vs_brms_sub20  | tracking | withSocInfo1:SocPosInFOV         |       0.895 |   0.178 |     0.201 | 121 |
+| eb_full_vs_brms_sub20  | tracking | withSocInfo1:SocPosInFOV:SocQual |       0.929 |   0.143 |     0.159 | 121 |
+| eb_sub20_vs_brms_sub20 | tracking | Detector                         |       0.997 |   0.435 |     0.455 | 121 |
+| eb_sub20_vs_brms_sub20 | tracking | Intercept                        |       0.998 |   0.536 |     0.552 | 121 |
+| eb_sub20_vs_brms_sub20 | tracking | withSocInfo1:SocMovDir           |       0.929 |   0.128 |     0.157 | 121 |
+| eb_sub20_vs_brms_sub20 | tracking | withSocInfo1:SocMovDir:SocQual   |       0.906 |   0.175 |     0.205 | 121 |
+| eb_sub20_vs_brms_sub20 | tracking | withSocInfo1:SocPosInFOV         |       0.907 |   0.155 |     0.201 | 121 |
+| eb_sub20_vs_brms_sub20 | tracking | withSocInfo1:SocPosInFOV:SocQual |       0.935 |   0.126 |     0.159 | 121 |
+
+  Agreement r = 0.90–0.998 (intercept/detector ≈ 0.99; social weights ≈ 0.9). The EB teacher is therefore a close proxy for the brms posterior means on the full sample; EB shrinks social random effects slightly more (smaller SD).
+- Fixed effects of the EB fit reproduce the paper's Fig 4 orderings (see phase0_report §4.5b).
 - Results are on 568 participants (search-phase available); generalisation to the 53 never-searching participants is untested.
 
 ## 8. Questions for the human (→ reports/questions.md)

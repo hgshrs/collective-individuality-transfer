@@ -160,7 +160,20 @@ Interpretation: the split-half r is an upper bound for how well any transfer mod
 
 ### 4.5b Provisional EB teacher vs brms
 
-Pending: brms full fits still running; EB fixed effects (tracking) reproduce the paper's ordering (A largest detector weight; FP largest social and quality-interaction weights; VP between NP and FP) — see `runs/eb/tracking_all_fixef.csv`.
+| comparison             | model    | coef                             |   r_eb_brms |   sd_eb |   sd_brms |   n |
+|:-----------------------|:---------|:---------------------------------|------------:|--------:|----------:|----:|
+| eb_full_vs_brms_sub20  | tracking | Detector                         |       0.988 |   0.449 |     0.455 | 121 |
+| eb_full_vs_brms_sub20  | tracking | Intercept                        |       0.975 |   0.565 |     0.552 | 121 |
+| eb_full_vs_brms_sub20  | tracking | withSocInfo1:SocMovDir           |       0.900 |   0.153 |     0.157 | 121 |
+| eb_full_vs_brms_sub20  | tracking | withSocInfo1:SocMovDir:SocQual   |       0.892 |   0.155 |     0.205 | 121 |
+| eb_full_vs_brms_sub20  | tracking | withSocInfo1:SocPosInFOV         |       0.895 |   0.178 |     0.201 | 121 |
+| eb_full_vs_brms_sub20  | tracking | withSocInfo1:SocPosInFOV:SocQual |       0.929 |   0.143 |     0.159 | 121 |
+| eb_sub20_vs_brms_sub20 | tracking | Detector                         |       0.997 |   0.435 |     0.455 | 121 |
+| eb_sub20_vs_brms_sub20 | tracking | Intercept                        |       0.998 |   0.536 |     0.552 | 121 |
+| eb_sub20_vs_brms_sub20 | tracking | withSocInfo1:SocMovDir           |       0.929 |   0.128 |     0.157 | 121 |
+| eb_sub20_vs_brms_sub20 | tracking | withSocInfo1:SocMovDir:SocQual   |       0.906 |   0.175 |     0.205 | 121 |
+| eb_sub20_vs_brms_sub20 | tracking | withSocInfo1:SocPosInFOV         |       0.907 |   0.155 |     0.201 | 121 |
+| eb_sub20_vs_brms_sub20 | tracking | withSocInfo1:SocPosInFOV:SocQual |       0.935 |   0.126 |     0.159 | 121 |
 
 EB tracking-model fixed effects (per condition × speed):
 
