@@ -1,0 +1,48 @@
+{
+ "z_dist": {
+  "params": {
+   "Intercept": -0.4338992544253676,
+   "dz_s": 0.10070312594505618,
+   "Group Var": 18.621255583316056
+  },
+  "pvalues": {
+   "Intercept": 1.8190832101511433e-20,
+   "dz_s": 0.0,
+   "Group Var": 1.2449056694973192e-62
+  },
+  "llf": -4094.004952568648,
+  "aic": 8196.009905137296
+ },
+ "summary_dist": {
+  "params": {
+   "Intercept": -0.43454132957925323,
+   "ds_s": 0.03564823098978253,
+   "Group Var": 17.001317514927123
+  },
+  "pvalues": {
+   "Intercept": 2.14311758014641e-20,
+   "ds_s": 3.745783056790531e-81,
+   "Group Var": 1.4233526770866869e-62
+  },
+  "llf": -5650.016170580755,
+  "aic": 11308.03234116151
+ },
+ "both": {
+  "params": {
+   "Intercept": -0.43390351947719125,
+   "dz_s": 0.09959175079981389,
+   "ds_s": 0.004008389521485195,
+   "Group Var": 18.626655517311228
+  },
+  "pvalues": {
+   "Intercept": 1.8287635122732344e-20,
+   "dz_s": 0.0,
+   "ds_s": 0.03145331156628603,
+   "Group Var": 1.2445444582668652e-62
+  },
+  "llf": -4091.6910264299368,
+  "aic": 8193.382052859874
+ },
+ "A_H2_pass": true,
+ "note": "log squared error increases with z distance => slope>0 here corresponds to the spec's 'negative slope of performance'"
+}

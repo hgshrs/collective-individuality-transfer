@@ -84,8 +84,10 @@ def train_fold(D, cfg, fold, seed, decoder="a", device="cuda", out_dir: Path = N
         hist.append((ep, tl / len(train), vfit.item()))
         if vfit.item() < best - 1e-5: best, bad = vfit.item(), 0; best_state = ({k: v.clone() for k, v in enc.state_dict().items()}, {k: v.clone() for k, v in dec.state_dict().items()})
         else: bad += 1
-        if bad >= cfg["patience"]: break
-    enc.load_state_dict(best_state[0]); dec.load_state_dict(best_state[1]); enc.eval(); dec.eval()
+        if bad >= cfg["patience"] and not cfg.get("no_early_stop", False): break
+    if not cfg.get("no_early_stop", False):   # early stopping: restore best-validation weights; otherwise keep the final-epoch model
+        enc.load_state_dict(best_state[0]); dec.load_state_dict(best_state[1])
+    enc.eval(); dec.eval()
     # ---- predictions for test participants ----
     with torch.no_grad():
         bt = make_batch(D, test, std, device, True); mu, lv = enc(bt["X"], bt["L"]); w = dec(mu, bt["C"])

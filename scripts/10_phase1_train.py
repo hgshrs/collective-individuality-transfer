@@ -14,7 +14,11 @@ if a.teacher: cfg["teacher"] = a.teacher
 if a.max_epochs: cfg["max_epochs"] = a.max_epochs
 cfg["arch"] = a.arch
 for kv in a.set:
-    k, v = kv.split("=", 1); cfg[k] = yaml.safe_load(v)
+    k, v = kv.split("=", 1); v = yaml.safe_load(v)
+    if isinstance(v, str):
+        try: v = float(v)          # YAML reads "1e-3" as a string
+        except ValueError: pass
+    cfg[k] = v
 exp = a.exp or f"phase1_{a.decoder}_z{cfg['z_dim']}" + ("" if a.arch == "cnn" else f"_{a.arch}")
 seeds = [int(s) for s in a.seeds.split(",")]; f0, f1 = (int(x) for x in a.folds.split("-")) if "-" in a.folds else (int(a.folds), int(a.folds))
 D = Phase1Data(cfg); print("participants:", len(D.participants), "device:", a.device)
