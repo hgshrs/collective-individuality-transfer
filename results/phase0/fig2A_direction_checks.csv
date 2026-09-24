@@ -1,0 +1,7 @@
+metric,speed,expected,observed,match
+total score,slow,FP>VP>NP>=A,FP>VP>NP>A,True
+total score,fast,FP>A>VP>NP,FP>A>VP>NP,True
+tracking time,slow,groups > A,FP>VP>NP>A,True
+tracking efficiency,slow,"FP>A>VP,NP",FP>A>VP>NP,True
+tracking time,fast,groups > A,FP>A>VP>NP,False
+tracking efficiency,fast,"A>=FP>VP,NP",A>FP>NP>VP,True

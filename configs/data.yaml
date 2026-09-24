@@ -1,0 +1,18 @@
+# Experiment constants (from Chirkov et al. 2026 Methods; verified against data in reports/data_audit.md)
+arena_diameter_m: 400
+resource_radius_m: 40
+resource_points_center_per_s: 40
+resource_points_edge_per_s: 1
+resource_speed_m_s: {slow: 2.8, fast: 5.6}
+avatar_speed_m_s: 7.0
+avatar_rotation_deg_s: 150
+fov_deg: 90
+sampling_hz: 10
+session_s: 900
+# 1 Hz discretisation used by the paper: steps 20..880 (861 steps)
+step_min: 20
+step_max: 880
+# split
+n_folds: 10
+split_seed: 0
+seeds: [0, 1, 2]

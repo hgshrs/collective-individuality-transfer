@@ -1,0 +1,9 @@
+condition_resource,condition_signaling,n_events
+fast,A,383
+fast,FP,147
+fast,NP,126
+fast,VP,173
+slow,A,212
+slow,FP,11
+slow,NP,17
+slow,VP,21

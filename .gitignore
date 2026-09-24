@@ -1,0 +1,13 @@
+data/raw/
+data/processed/*.parquet
+data/processed/*.nc
+data/processed/*.npz
+runs/
+logs/
+.venv/
+__pycache__/
+*.pyc
+._*
+.DS_Store
+external/
+*.zip
