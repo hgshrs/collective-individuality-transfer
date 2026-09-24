@@ -20,7 +20,8 @@ RTX 5080, torch 2.11+cu128; encoder/decoder training per fold takes seconds to a
 - Source: search-phase 1 s sequences (features: |Δθ|, signed Δθ, θ_pos, θ_mov, binary social quality, #visible, normalised distance; Alone participants have zeros in social features). Target: the paper's tracking-model participant random effects (intercept, Detector, θ_pos, θ_mov, θ_pos×quality, θ_mov×quality) from `runs/eb/tracking_all_ranef.csv` (EB fit; brms full fit abandoned for time — see phase0_report §4.4 and questions.md).
 - Split: `data/processed/split_v1.json` (10 folds, stratified by condition × speed, whole groups in one fold). Standardisation of inputs and of targets uses training participants of the fold only.
 - **Excluded from Phase 1: 53 participants with < 10 s of searching** (all slow resource: FP 27, A 10, NP 8, VP 8; they never lost the resource), leaving n = 568. They have no source sequence; see questions.md.
-- Teacher used for this report: `EB (GPU empirical-Bayes fit of the paper model, provisional)`. Split-half reliability of the teacher random effects (noise ceiling) is in phase0_report §4.5.
+- Teacher used for this report: EB (GPU empirical-Bayes fit of the paper model).
+- **Noise ceiling** (split-half retest r of the teacher random effects, first vs second 7.5 min, EB fits): Detector 0.60, Intercept 0.76, SocMovDir 0.17, SocMovDir:SocQual 0.09, SocPosInFOV 0.30, SocPosInFOV:SocQual 0.12. Only the intercept and detector weights are reliably measured within a 15-min session; the social weights (especially the quality interactions = payoff selectivity) have ceilings of r ≈ 0.1–0.3, so no transfer model can predict them well from this data.
 
 ## 3. Deviations from defaults
 

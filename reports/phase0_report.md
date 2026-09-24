@@ -23,7 +23,7 @@ Full audit: `reports/data_audit.md`. Key points:
 
 ## 3. Deviations from AGENT_SPEC defaults
 
-- brms sampling budget reduced to 4 × (1000 warm-up + 1500 draws) with 5 threads/chain (paper: 4 × (2000 + 3000), 100 threads); convergence diagnostics reported in §4.5.
+- **brms fits not completed.** The paper-code brms tracking fit (4 chains × 2500 iterations, 5 threads/chain, 24 cores) reached warm-up iteration 200 after 4 h 45 min and was stopped (projected > 1 day per model, ≈ 1 week for all six fits). Teacher random effects therefore come from a GPU empirical-Bayes / penalised-ML fit of the identical model (same features, constant(0) structure, priors, truncated-Exponential likelihood; diagonal instead of LKJ random-effect covariance; Laplace marginal-likelihood correction) — `scripts/05_teacher_eb.py`, ≈ 1.6 min per fit. A 20 % subsample brms fit (4 × 1500) is used to validate EB against brms (§4.5b).
 - Fig 2A/3A/3B reproduced with raw means ± 95 % CI instead of Bayesian Beta/Poisson/logistic regressions (allowed by §3.1-2).
 - Angle normalisers fixed to geometric constants (45.75°, 180°) instead of sample maxima (see questions.md).
 - The paper's tracking model has no participant-level random slope for distance; teacher signal = the paper's 6 random effects.

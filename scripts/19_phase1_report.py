@@ -22,7 +22,11 @@ P("## 2. Data\n")
 P("- Source: search-phase 1 s sequences (features: |Δθ|, signed Δθ, θ_pos, θ_mov, binary social quality, #visible, normalised distance; Alone participants have zeros in social features). Target: the paper's tracking-model participant random effects (intercept, Detector, θ_pos, θ_mov, θ_pos×quality, θ_mov×quality) from `runs/eb/tracking_all_ranef.csv` (EB fit; brms full fit abandoned for time — see phase0_report §4.4 and questions.md).")
 P("- Split: `data/processed/split_v1.json` (10 folds, stratified by condition × speed, whole groups in one fold). Standardisation of inputs and of targets uses training participants of the fold only.")
 P("- **Excluded from Phase 1: 53 participants with < 10 s of searching** (all slow resource: FP 27, A 10, NP 8, VP 8; they never lost the resource), leaving n = 568. They have no source sequence; see questions.md.")
-P(f"- Teacher used for this report: `{ 'EB (GPU empirical-Bayes fit of the paper model, provisional)' if SUF == '_eb' else 'brms (paper code)'}`. Split-half reliability of the teacher random effects (noise ceiling) is in phase0_report §4.5.\n")
+P(f"- Teacher used for this report: {'EB (GPU empirical-Bayes fit of the paper model)' if SUF == '_eb' else 'brms (paper code)'}.")
+rel = RESULTS / "phase0" / "split_half_reliability.csv"
+if rel.exists() and rel.stat().st_size > 1:
+    r = pd.read_csv(rel); r = r[(r.estimator == "eb") & (r.model == "tracking")]
+    P("- **Noise ceiling** (split-half retest r of the teacher random effects, first vs second 7.5 min, EB fits): " + ", ".join(f"{c.replace('withSocInfo1:', '')} {v:.2f}" for c, v in zip(r.coef, r.r_first_second)) + ". Only the intercept and detector weights are reliably measured within a 15-min session; the social weights (especially the quality interactions = payoff selectivity) have ceilings of r ≈ 0.1–0.3, so no transfer model can predict them well from this data.\n")
 P("## 3. Deviations from defaults\n")
 P("- Target includes the participant intercept (paper RE structure) and excludes a distance weight (no such random slope in the paper's model) — see questions.md.")
 P("- Early stopping uses a 10 % stratified validation subset of the training participants (spec: 'fold 内 early stop').")
