@@ -1,0 +1,48 @@
+{
+ "z_dist": {
+  "params": {
+   "Intercept": -0.4690673437835461,
+   "dz_s": 0.04663013584037485,
+   "Group Var": 36.53797609195846
+  },
+  "pvalues": {
+   "Intercept": 3.072913846519939e-21,
+   "dz_s": 4.750043063349144e-235,
+   "Group Var": 1.0065757507436736e-62
+  },
+  "llf": 4750.004572993639,
+  "aic": -9492.009145987278
+ },
+ "summary_dist": {
+  "params": {
+   "Intercept": -0.4692077978603562,
+   "ds_s": 0.023984833503652818,
+   "Group Var": 35.99223740331592
+  },
+  "pvalues": {
+   "Intercept": 4.3362107162375484e-21,
+   "ds_s": 2.1931879631600892e-69,
+   "Group Var": 1.029958193034248e-62
+  },
+  "llf": 4377.160014926951,
+  "aic": -8746.320029853901
+ },
+ "both": {
+  "params": {
+   "Intercept": -0.4690711409678256,
+   "dz_s": 0.04288332074633999,
+   "ds_s": 0.011495638194223624,
+   "Group Var": 36.637267531892505
+  },
+  "pvalues": {
+   "Intercept": 3.158896786651313e-21,
+   "dz_s": 8.684432848595262e-181,
+   "ds_s": 4.2718409422904335e-16,
+   "Group Var": 1.002133067339842e-62
+  },
+  "llf": 4783.0241650377575,
+  "aic": -9556.048330075515
+ },
+ "A_H2_pass": true,
+ "note": "log squared error increases with z distance => slope>0 here corresponds to the spec's 'negative slope of performance'"
+}

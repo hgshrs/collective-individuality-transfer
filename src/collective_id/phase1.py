@@ -33,8 +33,11 @@ def stratified_val(parts, meta, frac, rng):
         idx = list(g.index); rng.shuffle(idx); val += idx[:max(1, int(round(len(idx) * frac)))]
     return set(val)
 
-def make_batch(D, parts, std, device, need_trk=False):
-    X, M = pad_batch([std(D.src[p][0]) for p in parts], len(SRC_FEATS))
+def make_batch(D, parts, std, device, need_trk=False, crop=None, rng=None):
+    seqs = [std(D.src[p][0]) for p in parts]
+    if crop:   # random contiguous window of length <= crop (training-time augmentation)
+        seqs = [s[(o := rng.integers(0, max(1, len(s) - crop + 1))):o + crop] for s in seqs]
+    X, M = pad_batch(seqs, len(SRC_FEATS))
     C = torch.from_numpy(np.stack([D.cond[p] for p in parts]))
     out = dict(X=X.to(device), L=M.sum(1).to(device), C=C.to(device))
     if need_trk:
@@ -53,11 +56,14 @@ def train_fold(D, cfg, fold, seed, decoder="a", device="cuda", out_dir: Path = N
     T = lambda ps: torch.tensor(((D.teacher.loc[ps] - tmu) / tsd).to_numpy(np.float32), device=device)
     W = lambda ps: torch.tensor((1.0 / (D.teacher_sd.loc[ps] ** 2 + 1e-6)).to_numpy(np.float32), device=device)
     K = len(cfg["target_coefs"]); n_cond = 6
-    enc = Encoder(len(SRC_FEATS), cfg["z_dim"], cfg["hidden"], cfg["n_layers"], cfg["kernel"], cfg["dropout"]).to(device)
+    enc = Encoder(len(SRC_FEATS), cfg["z_dim"], cfg["hidden"], cfg["n_layers"], cfg["kernel"], cfg["dropout"], cfg.get("arch", "cnn")).to(device)
     dec = (WeightDecoder(cfg["z_dim"], n_cond, K, cfg["hidden"]) if decoder == "a" else HyperRotationDecoder(cfg["z_dim"], n_cond, len(TRK_FEATS), cfg["hidden"])).to(device)
-    opt = torch.optim.Adam(list(enc.parameters()) + list(dec.parameters()), cfg["lr"])
+    opt = torch.optim.AdamW(list(enc.parameters()) + list(dec.parameters()), cfg["lr"], weight_decay=cfg.get("weight_decay", 0.0))
+    in_drop = cfg.get("input_dropout", 0.0); crop = cfg.get("crop_len", None)
     def loss_fn(b, ps, sample):
-        mu, lv = enc(b["X"], b["L"]); z = reparam(mu, lv, sample); w = dec(z, b["C"])
+        X = b["X"]
+        if sample and in_drop > 0: X = X * (torch.rand_like(X[:, :1, :]) > in_drop).float() / (1 - in_drop)   # feature-channel dropout
+        mu, lv = enc(X, b["L"]); z = reparam(mu, lv, sample); w = dec(z, b["C"])
         if decoder == "a":
             wt = W(ps); wt = wt / wt.mean(0, keepdim=True)                         # posterior-precision weights, normalised per coef
             fit = ((w - T(ps)) ** 2 * wt).mean()
@@ -71,7 +77,7 @@ def train_fold(D, cfg, fold, seed, decoder="a", device="cuda", out_dir: Path = N
         enc.train(); dec.train(); perm = rng.permutation(len(train)); tl = 0
         for i in range(0, len(train), cfg["batch_size"]):
             ps = [train[j] for j in perm[i:i + cfg["batch_size"]]]
-            b = make_batch(D, ps, std, device, decoder == "b")
+            b = make_batch(D, ps, std, device, decoder == "b", crop=crop, rng=rng)
             loss, _ = loss_fn(b, ps, True); opt.zero_grad(); loss.backward(); opt.step(); tl += loss.item() * len(ps)
         enc.eval(); dec.eval()
         with torch.no_grad(): vl, vfit = loss_fn(bval, val, False)
@@ -114,7 +120,7 @@ def train_fold(D, cfg, fold, seed, decoder="a", device="cuda", out_dir: Path = N
 def encode_participants(model_path, D, parts, device="cuda"):
     """Apply a saved fold model's encoder to arbitrary participants' source sequences (for ICC, simulated agents...)."""
     ck = torch.load(model_path, map_location=device, weights_only=False); cfg = ck["cfg"]
-    enc = Encoder(len(SRC_FEATS), cfg["z_dim"], cfg["hidden"], cfg["n_layers"], cfg["kernel"], cfg["dropout"]).to(device); enc.load_state_dict(ck["enc"]); enc.eval()
+    enc = Encoder(len(SRC_FEATS), cfg["z_dim"], cfg["hidden"], cfg["n_layers"], cfg["kernel"], cfg["dropout"], cfg.get("arch", "cnn")).to(device); enc.load_state_dict(ck["enc"]); enc.eval()
     std = Standardizer(); std.mu, std.sd = ck["std_mu"], ck["std_sd"]
     with torch.no_grad():
         b = make_batch(D, parts, std, device); mu, _ = enc(b["X"], b["L"])

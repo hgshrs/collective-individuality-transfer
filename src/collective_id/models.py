@@ -3,19 +3,27 @@ hypernetwork decoder (b) z+cond -> weights of an Exponential rotation predictor.
 import math, torch, torch.nn as nn, torch.nn.functional as F
 
 class Encoder(nn.Module):
-    """x: (B, T, F) 1 s sequence of features (+ mask channel), returns mu, logvar of z (B, M)."""
-    def __init__(self, n_feat: int, z_dim: int = 4, hidden: int = 64, n_layers: int = 3, kernel: int = 5, dropout: float = 0.1):
+    """x: (B, T, F) 1 s sequence of features, returns mu, logvar of z (B, M). arch: 'cnn' (default) or 'gru'."""
+    def __init__(self, n_feat: int, z_dim: int = 4, hidden: int = 64, n_layers: int = 3, kernel: int = 5, dropout: float = 0.1, arch: str = "cnn"):
         super().__init__()
-        layers, c = [], n_feat
-        for i in range(n_layers):
-            layers += [nn.Conv1d(c, hidden, kernel, padding=kernel // 2), nn.GELU(), nn.Dropout(dropout)]
-            c = hidden
-        self.conv = nn.Sequential(*layers)
+        self.arch = arch
+        if arch == "gru":
+            self.rnn = nn.GRU(n_feat, hidden, num_layers=2, batch_first=True, dropout=dropout, bidirectional=True)
+            self.proj = nn.Linear(2 * hidden, hidden)
+        else:
+            layers, c = [], n_feat
+            for i in range(n_layers):
+                layers += [nn.Conv1d(c, hidden, kernel, padding=kernel // 2), nn.GELU(), nn.Dropout(dropout)]
+                c = hidden
+            self.conv = nn.Sequential(*layers)
         self.head = nn.Sequential(nn.Linear(hidden * 2, hidden), nn.GELU(), nn.Linear(hidden, 2 * z_dim))
         self.z_dim = z_dim
 
     def forward(self, x, lengths=None):
-        h = self.conv(x.transpose(1, 2))            # (B, H, T)
+        if self.arch == "gru":
+            h = self.proj(self.rnn(x)[0]).transpose(1, 2)   # (B, H, T)
+        else:
+            h = self.conv(x.transpose(1, 2))            # (B, H, T)
         if lengths is not None:                       # masked mean/max pooling over valid steps
             m = (torch.arange(h.shape[-1], device=h.device)[None, :] < lengths[:, None]).float()[:, None, :]
             mean = (h * m).sum(-1) / m.sum(-1).clamp(min=1)
