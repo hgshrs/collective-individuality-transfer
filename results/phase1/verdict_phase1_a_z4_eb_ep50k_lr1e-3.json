@@ -1,0 +1,10 @@
+{
+ "exp": "phase1_a_z4_eb_ep50k_lr1e-3",
+ "mean_delta_r_vs_cond_mean": 0.44880352745428836,
+ "mean_delta_r_vs_ridge": -0.08184819378257606,
+ "min_mixed_p_vs_cond_mean": 0.0,
+ "n_coefs_p_lt_0_01_vs_cond": 3,
+ "A_H1_pass": false,
+ "A_H2_pass": true,
+ "condition_decoding_acc": 0.26405837602856697
+}
