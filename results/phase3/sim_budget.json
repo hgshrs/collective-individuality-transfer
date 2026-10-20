@@ -1,0 +1,9 @@
+{
+ "n_runs": 202200,
+ "wall_s": 3949.2573866844177,
+ "sigma": "fixed10",
+ "seeds": 100,
+ "seeds_shuffle": 10,
+ "n_shuffle": 50,
+ "procs": 21
+}

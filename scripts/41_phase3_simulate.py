@@ -80,7 +80,7 @@ def run_one(job):
 
 def main():
     ap = argparse.ArgumentParser(); ap.add_argument("--seeds", type=int, default=100); ap.add_argument("--seeds_shuffle", type=int, default=10); ap.add_argument("--n_shuffle", type=int, default=50)
-    ap.add_argument("--procs", type=int, default=20); ap.add_argument("--groups", default="all"); ap.add_argument("--sigma", default="fixed10", help="fixed10 = paper noise 10 deg for all variants; fitted = group-mean fitted sigma"); ap.add_argument("--tag", default=""); a = ap.parse_args()
+    ap.add_argument("--procs", type=int, default=20); ap.add_argument("--groups", default="all"); ap.add_argument("--sigma", default="fixed10", help="fixed10 = paper noise 10 deg for all variants; fitted = group-mean fitted sigma"); ap.add_argument("--tag", default=""); ap.add_argument("--only", default="", help="comma-separated variants to run (default all)"); a = ap.parse_args()
     par = pd.read_csv(OUT / "policy_params_all.csv").set_index("participant"); pooled = pd.read_csv(OUT / "policy_pooled_by_cell_fold.csv").set_index(["cell", "fold"])
     sp = load_split(); fold_g = sp["fold_of_group"]
     grp = par[par.cond != "A"]
@@ -110,13 +110,15 @@ def main():
         # shuffles: same-cell participants from other groups (any fold; the replaced members' own fits do not involve this group)
         pool = train if len(train) >= 3 * n else grp[(grp.cell == cell) & (grp.group != g)]
         cand = [pool.sample(n, random_state=int(rng.integers(1e9))) for _ in range(20 * a.n_shuffle)]
-        mu, sd_ = grp[P5].mean(), grp[P5].std() + 1e-9
-        target = ((pd.Series(Pm.mean(0), index=P5) - mu) / sd_).to_numpy()
-        dist = np.array([np.linalg.norm(((c[P5].mean() - mu) / sd_).to_numpy() - target) for c in cand])
+        PM = P5 + ["persistence"]                                           # match on all transferred parameters incl. persistence (model-level, group mean)
+        mu, sd_ = grp[PM].mean(), grp[PM].std() + 1e-9
+        target = ((mem[PM].mean() - mu) / sd_).to_numpy()
+        dist = np.array([np.linalg.norm(((c[PM].mean() - mu) / sd_).to_numpy() - target) for c in cand])
         order = np.argsort(dist); mps = [cand[i] for i in order[:a.n_shuffle]]; rnd = cand[:a.n_shuffle]
         for v, lst in (("ctrl4_shuffle", rnd), ("ctrl4b_mps", mps)):
             for di, c in enumerate(lst):
                 for sd in range(a.seeds_shuffle): jobs.append((f"{g}|{v}", g, v, di, speed, c[P5].to_numpy(float), (float(c.sigma.mean()) if a.sigma == "fitted" else 10.0, float(c.persistence.mean())), 30_000_000 + 100_000 * gi + 100 * di + sd))
+    if a.only: jobs = [j for j in jobs if j[2] in a.only.split(",")]
     pd.DataFrame(gpar).to_csv(OUT / f"sim_group_params{a.tag}.csv", index=False)
     print(f"{len(groups)} groups, {len(jobs)} runs", flush=True)
     t0 = time.time(); rows = []

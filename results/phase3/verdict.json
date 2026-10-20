@@ -1,0 +1,60 @@
+{
+ "score_vs_ctrl1_paper": {
+  "delta_r": 0.649820950320337,
+  "p_boot": 0.0,
+  "p_perm": 0.0,
+  "passes": true
+ },
+ "score_vs_ctrl2_avg": {
+  "delta_r": 0.9271629417713338,
+  "p_boot": 0.0,
+  "p_perm": 0.0,
+  "passes": true
+ },
+ "pcr_vs_ctrl1_paper": {
+  "delta_r": 0.5150519163961182,
+  "p_boot": 0.0,
+  "p_perm": 0.001,
+  "passes": true
+ },
+ "pcr_vs_ctrl2_avg": {
+  "delta_r": 0.7353264282106635,
+  "p_boot": 0.0,
+  "p_perm": 0.0,
+  "passes": true
+ },
+ "D_H1": "PASS",
+ "D_H2_shuffle": {
+  "score": {
+   "p_perm": 0.0,
+   "r_main": 0.5540448962186436,
+   "r_shuffle_mean": -0.02220792088491337
+  },
+  "pcr": {
+   "p_perm": 0.0,
+   "r_main": 0.45187974249275914,
+   "r_shuffle_mean": -0.018724490234807645
+  },
+  "tracking_time": {
+   "p_perm": 0.0,
+   "r_main": 0.5382122737706477,
+   "r_shuffle_mean": -0.021125771093890022
+  }
+ },
+ "D_H2_mean_preserving": {
+  "score": {
+   "p_perm": 0.012,
+   "r_shuffle_mean": 0.4278307961769512
+  },
+  "pcr": {
+   "p_perm": 0.1925,
+   "r_shuffle_mean": 0.3996096319176317
+  },
+  "tracking_time": {
+   "p_perm": 0.014,
+   "r_shuffle_mean": 0.40178202811360125
+  }
+ },
+ "D_H2": "PASS",
+ "D_H2_mps": "FAIL"
+}
