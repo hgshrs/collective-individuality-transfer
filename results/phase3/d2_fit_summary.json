@@ -1,0 +1,88 @@
+{
+ "folds": {
+  "0": {
+   "epochs": 80,
+   "val_nll_indiv": 4.186309814453125,
+   "val_nll_pop": 4.287478923797607,
+   "n_train_sec": 412935,
+   "n_test_participants": 72,
+   "min": 0.15695908069610595
+  },
+  "1": {
+   "epochs": 80,
+   "val_nll_indiv": 4.161362648010254,
+   "val_nll_pop": 4.255778789520264,
+   "n_train_sec": 414076,
+   "n_test_participants": 70,
+   "min": 0.3017216920852661
+  },
+  "2": {
+   "epochs": 53,
+   "val_nll_indiv": 4.205847263336182,
+   "val_nll_pop": 4.28466796875,
+   "n_train_sec": 415998,
+   "n_test_participants": 68,
+   "min": 0.3989552140235901
+  },
+  "3": {
+   "epochs": 80,
+   "val_nll_indiv": 4.173460006713867,
+   "val_nll_pop": 4.279305458068848,
+   "n_train_sec": 415123,
+   "n_test_participants": 69,
+   "min": 0.5466375708580017
+  },
+  "4": {
+   "epochs": 80,
+   "val_nll_indiv": 4.173649787902832,
+   "val_nll_pop": 4.2764081954956055,
+   "n_train_sec": 424839,
+   "n_test_participants": 56,
+   "min": 0.6994771242141724
+  },
+  "5": {
+   "epochs": 75,
+   "val_nll_indiv": 4.161584854125977,
+   "val_nll_pop": 4.284547805786133,
+   "n_train_sec": 427714,
+   "n_test_participants": 52,
+   "min": 0.8399886051813762
+  },
+  "6": {
+   "epochs": 80,
+   "val_nll_indiv": 4.171502590179443,
+   "val_nll_pop": 4.280787467956543,
+   "n_train_sec": 416518,
+   "n_test_participants": 67,
+   "min": 0.9828800320625305
+  },
+  "7": {
+   "epochs": 75,
+   "val_nll_indiv": 4.169837951660156,
+   "val_nll_pop": 4.256996154785156,
+   "n_train_sec": 422667,
+   "n_test_participants": 59,
+   "min": 1.121793560187022
+  },
+  "8": {
+   "epochs": 76,
+   "val_nll_indiv": 4.182150363922119,
+   "val_nll_pop": 4.284982681274414,
+   "n_train_sec": 424809,
+   "n_test_participants": 56,
+   "min": 1.257678763071696
+  },
+  "9": {
+   "epochs": 80,
+   "val_nll_indiv": 4.156682968139648,
+   "val_nll_pop": 4.250010013580322,
+   "n_train_sec": 427735,
+   "n_test_participants": 52,
+   "min": 1.4027498046557108
+  }
+ },
+ "mean_val_gain_indiv_vs_pop": 0.0998575210571289,
+ "heldout_gain_indiv_vs_pop": 0.0780392587184906,
+ "heldout_gain_track": 0.08977428823709488,
+ "frac_indiv_better": 0.8470209339774557
+}
