@@ -1,0 +1,10 @@
+{
+ "n": 588,
+ "nll_policy_indiv": -0.2720685405595569,
+ "nll_policy_pooled": -0.2940313617664248,
+ "nll_linear_indiv": -0.1932249222384728,
+ "nll_linear_pop": -0.2378407141515479,
+ "gain_policy_indiv_vs_pooled": -0.021962821206867857,
+ "gain_linear_indiv_vs_pop": -0.044615791913075124,
+ "frac_participants_policy_better_than_linear": 0.6360544217687075
+}
