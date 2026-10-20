@@ -12,3 +12,4 @@ __pycache__/
 external/
 *.zip
 data/processed/wu2025/*.parquet
+data/processed/hawkins2023/*.parquet
