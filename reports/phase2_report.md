@@ -155,9 +155,25 @@ Without the score control:
 
 ## 5. Pass/fail (pre-registered §5.1: z beats the first-3-min-score baseline by Δr ≥ 0.05 with p < 0.01)
 
-- **In-degree:** z alone Δr = 0.114 [0.027, 0.194], bootstrap p = 0.008, mixed-model p = 0.052; z + score Δr = 0.161 [0.085, 0.235], mixed p = 0.006.
-- **Out-degree:** z alone Δr = 0.079 [-0.019, 0.177], mixed p = 0.155; z + score Δr = 0.101, mixed p = 0.058.
-- **Verdict B-H1: FAIL on the strict reading (z alone, mixed-model p), PASS for in-degree when z is combined with the score baseline.** The effect sizes exceed the pre-registered Δr ≥ 0.05 for both degrees and all linear z variants, and the bootstrap CIs exclude 0 for in-degree and in − out; the mixed-model p-value, which is the more conservative test (it accounts for group clustering), reaches p < 0.01 only for in-degree with z + score (p = 0.006) and in − out (p = 0.009). The honest summary: early own-movement style predicts later roles with r ≈ 0.25–0.33 (vs 0.1–0.17 for early score), i.e. ≈ 10 % of role variance beyond early performance — a real but modest individual contribution.
+Decision of 2026-10-20 (human; questions.md): the criterion is written in Δr, so the p-value is computed **on Δr itself** with a group-level (cluster) bootstrap, per target; the squared-error mixed model (the Phase 1 test) is reported alongside. Cluster bootstrap (3,000 resamples of whole groups):
+
+| target       | model          |   delta_r | cl_ci           |   p_cluster_r |   dMSE_frac |   p_cluster_mse |
+|:-------------|:---------------|----------:|:----------------|--------------:|------------:|----------------:|
+| in_deg       | z_pca4         |     0.114 | [0.026, 0.204]  |        0.0067 |       0.044 |          0.0473 |
+| in_deg       | z_pca4+score3  |     0.161 | [0.082, 0.241]  |        0      |       0.069 |          0.0053 |
+| in_deg       | ridge_allstats |     0.169 | [0.087, 0.258]  |        0      |       0.074 |          0.004  |
+| out_deg      | z_pca4         |     0.079 | [-0.025, 0.174] |        0.142  |       0.044 |          0.1813 |
+| out_deg      | z_pca4+score3  |     0.101 | [0.017, 0.189]  |        0.0133 |       0.057 |          0.0607 |
+| out_deg      | ridge_allstats |     0.124 | [0.035, 0.209]  |        0.0053 |       0.073 |          0.024  |
+| in_minus_out | z_pca4         |     0.117 | [0.007, 0.219]  |        0.0387 |       0.054 |          0.054  |
+| in_minus_out | z_pca4+score3  |     0.163 | [0.066, 0.260]  |        0.0013 |       0.081 |          0.0053 |
+| in_minus_out | ridge_allstats |     0.182 | [0.076, 0.287]  |        0.0007 |       0.094 |          0.0027 |
+
+- **In-degree: PASS.** z alone Δr = 0.114 [cluster CI [0.026, 0.204]], p = 0.007.
+- **Out-degree: FAIL.** z alone Δr = 0.079 [[-0.025, 0.174]], p = 0.14.
+- **In − out: FAIL at p < 0.01** (Δr = 0.117, p = 0.039).
+- **Verdict B-H1: PASS for in-degree, FAIL for out-degree.** Supplementary readings: the incremental test (z + score vs score) passes for in-degree and in − out (Δr 0.16, p < 0.002); the squared-error mixed model gives p = 0.052 for z alone (in-degree) — the discrepancy with the Δr test is not clustering but the quantity tested: ridge predictions are strongly shrunk (prediction SD = 17–33 % of the target SD), so z improves the *ranking* of participants clearly while improving squared error only marginally. Effect size summary: early own-movement style predicts later roles with r ≈ 0.25–0.33 (vs 0.1–0.17 for early score), ≈ 10 % of role variance beyond early performance.
+- The in/out asymmetry is consistent with the decomposition: being looked at (in-degree) depends on one's own movement, looking at others (out-degree) depends more on the others' placement.
 - **B-H2 (FP > NP): not supported.** z predicts in-degree about equally in NP, VP and FP (r 0.18 / 0.27 / 0.18); payoff information does not widen the expression of these individual differences in roles.
 - **Decomposition:** own z explains ≈ 9–11 % of in/out-degree variance (LRT p < 0.001), the **others' mean z adds another ≈ 5–8 % (p < 0.001)** — one's visibility role depends on how the other members move — while the within-group SD of z adds nothing (p = 0.2–0.9), and the group random intercept is small (ICC ≤ 0.12 for in-degree, 0 for out-degree). Roles are therefore individual + "who you are with" (additively), not a composition effect — the same pattern as the pre-Phase-3 diagnostics.
 - Discovery targets: the number of discoveries is explained by the speed cell (R² 0.33; discoveries are a fast-resource phenomenon) and z adds nothing; the discoverer in-degree gain (n = 205) is unpredictable from any source.
@@ -271,5 +287,5 @@ No z dimension correlates with the payoff-selectivity weights (|ρ| ≤ 0.15; th
 
 ## 10. Questions for the human (→ questions.md)
 
-1. B-H1 strict verdict is FAIL (z alone, mixed p 0.05) but PASS for in-degree with z + score and in − out; which reading to carry into the paper?
-2. Phase 3: given Phase 2 and the diagnostics, proceed in the reduced form proposed on 2026-10-02 (linear RE → ABM mapping, mean-preserving shuffle control), or stop here?
+1. (Resolved 2026-10-20) Verdict reading: Δr tested directly with a cluster bootstrap, per target → in-degree PASS, out-degree FAIL.
+2. (Resolved 2026-10-20) Phase 3 proceeds in reduced form (D-1 with per-participant ABM-policy parameters, mean-preserving shuffle control; D-2 deferred).

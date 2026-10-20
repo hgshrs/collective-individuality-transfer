@@ -6,7 +6,7 @@ O = RESULTS / "phase2"
 R = pd.read_csv(O / "planB_r.csv"); D = pd.read_csv(O / "planB_delta.csv"); B = pd.read_csv(O / "planB_by_condition.csv"); DEC = pd.read_csv(O / "planB_decomposition.csv")
 CNN = pd.read_csv(O / "planB_cnn_r.csv"); CNND = pd.read_csv(O / "planB_cnn_delta.csv"); V = json.load(open(O / "planB_verdict.json"))
 LOAD = pd.read_csv(O / "z_planB_pca4_loadings.csv", index_col=0)
-C = pd.read_csv(O / "planC_r.csv"); C2 = pd.read_csv(O / "planC_H2_correlations.csv")
+CB = pd.read_csv(O / "planB_cluster_bootstrap.csv"); C = pd.read_csv(O / "planC_r.csv"); C2 = pd.read_csv(O / "planC_H2_correlations.csv")
 T = pd.read_csv(PROCESSED / "phase2_targets.csv"); F3 = pd.read_csv(PROCESSED / "phase2_first3min_stats.csv", index_col=0)
 grp = T[T.cond != "A"]; vp = T[T.cond == "VP"]
 md = lambda df: df.to_markdown(index=False)
@@ -79,9 +79,15 @@ Without the score control:
 
 ## 5. Pass/fail (pre-registered §5.1: z beats the first-3-min-score baseline by Δr ≥ 0.05 with p < 0.01)
 
-- **In-degree:** z alone Δr = {f3(z_in.delta_r)} [{f3(z_in.ci_lo)}, {f3(z_in.ci_hi)}], bootstrap p = {f3(z_in.p_boot)}, mixed-model p = {f3(z_in.mixed_p)}; z + score Δr = {f3(zs_in.delta_r)} [{f3(zs_in.ci_lo)}, {f3(zs_in.ci_hi)}], mixed p = {f3(zs_in.mixed_p)}.
-- **Out-degree:** z alone Δr = {f3(z_out.delta_r)} [{f3(z_out.ci_lo)}, {f3(z_out.ci_hi)}], mixed p = {f3(z_out.mixed_p)}; z + score Δr = {f3(zs_out.delta_r)}, mixed p = {f3(zs_out.mixed_p)}.
-- **Verdict B-H1: {"PASS" if V["B_H1"] == "PASS" else "FAIL on the strict reading (z alone, mixed-model p), PASS for in-degree when z is combined with the score baseline"}.** The effect sizes exceed the pre-registered Δr ≥ 0.05 for both degrees and all linear z variants, and the bootstrap CIs exclude 0 for in-degree and in − out; the mixed-model p-value, which is the more conservative test (it accounts for group clustering), reaches p < 0.01 only for in-degree with z + score (p = {f3(zs_in.mixed_p)}) and in − out (p = {f3(D[(D.model=='z_pca4+score3')&(D.baseline=='score3_only')&(D.target=='in_minus_out')].mixed_p.iloc[0])}). The honest summary: early own-movement style predicts later roles with r ≈ 0.25–0.33 (vs 0.1–0.17 for early score), i.e. ≈ 10 % of role variance beyond early performance — a real but modest individual contribution.
+Decision of 2026-10-20 (human; questions.md): the criterion is written in Δr, so the p-value is computed **on Δr itself** with a group-level (cluster) bootstrap, per target; the squared-error mixed model (the Phase 1 test) is reported alongside. Cluster bootstrap (3,000 resamples of whole groups):
+
+{md(CB)}
+
+- **In-degree: PASS.** z alone Δr = {f3(z_in.delta_r)} [cluster CI {CB[(CB.target=='in_deg')&(CB.model=='z_pca4')].cl_ci.iloc[0]}], p = {CB[(CB.target=='in_deg')&(CB.model=='z_pca4')].p_cluster_r.iloc[0]:.3f}.
+- **Out-degree: FAIL.** z alone Δr = {f3(z_out.delta_r)} [{CB[(CB.target=='out_deg')&(CB.model=='z_pca4')].cl_ci.iloc[0]}], p = {CB[(CB.target=='out_deg')&(CB.model=='z_pca4')].p_cluster_r.iloc[0]:.2f}.
+- **In − out: FAIL at p < 0.01** (Δr = 0.117, p = {CB[(CB.target=='in_minus_out')&(CB.model=='z_pca4')].p_cluster_r.iloc[0]:.3f}).
+- **Verdict B-H1: PASS for in-degree, FAIL for out-degree.** Supplementary readings: the incremental test (z + score vs score) passes for in-degree and in − out (Δr 0.16, p < 0.002); the squared-error mixed model gives p = {f3(z_in.mixed_p)} for z alone (in-degree) — the discrepancy with the Δr test is not clustering but the quantity tested: ridge predictions are strongly shrunk (prediction SD = 17–33 % of the target SD), so z improves the *ranking* of participants clearly while improving squared error only marginally. Effect size summary: early own-movement style predicts later roles with r ≈ 0.25–0.33 (vs 0.1–0.17 for early score), ≈ 10 % of role variance beyond early performance.
+- The in/out asymmetry is consistent with the decomposition: being looked at (in-degree) depends on one's own movement, looking at others (out-degree) depends more on the others' placement.
 - **B-H2 (FP > NP): not supported.** z predicts in-degree about equally in NP, VP and FP (r {bc[bc.model=='z_pca4'].NP.iloc[0]:.2f} / {bc[bc.model=='z_pca4'].VP.iloc[0]:.2f} / {bc[bc.model=='z_pca4'].FP.iloc[0]:.2f}); payoff information does not widen the expression of these individual differences in roles.
 - **Decomposition:** own z explains ≈ 9–11 % of in/out-degree variance (LRT p < 0.001), the **others' mean z adds another ≈ 5–8 % (p < 0.001)** — one's visibility role depends on how the other members move — while the within-group SD of z adds nothing (p = 0.2–0.9), and the group random intercept is small (ICC ≤ 0.12 for in-degree, 0 for out-degree). Roles are therefore individual + "who you are with" (additively), not a composition effect — the same pattern as the pre-Phase-3 diagnostics.
 - Discovery targets: the number of discoveries is explained by the speed cell (R² 0.33; discoveries are a fast-resource phenomenon) and z adds nothing; the discoverer in-degree gain (n = 205) is unpredictable from any source.
@@ -126,7 +132,7 @@ No z dimension correlates with the payoff-selectivity weights (|ρ| ≤ 0.15; th
 
 ## 10. Questions for the human (→ questions.md)
 
-1. B-H1 strict verdict is FAIL (z alone, mixed p 0.05) but PASS for in-degree with z + score and in − out; which reading to carry into the paper?
-2. Phase 3: given Phase 2 and the diagnostics, proceed in the reduced form proposed on 2026-10-02 (linear RE → ABM mapping, mean-preserving shuffle control), or stop here?
+1. (Resolved 2026-10-20) Verdict reading: Δr tested directly with a cluster bootstrap, per target → in-degree PASS, out-degree FAIL.
+2. (Resolved 2026-10-20) Phase 3 proceeds in reduced form (D-1 with per-participant ABM-policy parameters, mean-preserving shuffle control; D-2 deferred).
 """
 (REPORTS / "phase2_report.md").write_text(txt); print(txt[:3000])

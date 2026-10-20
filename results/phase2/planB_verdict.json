@@ -19,5 +19,8 @@
   false,
   false
  ],
- "B_H1": "FAIL"
+ "B_H1": "PASS (in-degree) / FAIL (out-degree)",
+ "reading": "\u0394r tested directly, cluster bootstrap, per target (decision 2026-10-20)",
+ "in_deg": "PASS",
+ "out_deg": "FAIL"
 }
