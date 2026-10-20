@@ -1,0 +1,13 @@
+type,param,r_vs_stan,n
+group,Locality,0.9916413691612367,128
+group,BlockVisibility,0.9544231995531028,128
+group,RewardPrediction,0.9737306411907966,128
+group,SuccessfulProximity,0.9534198063512942,128
+group,UnsuccessfulProximity,0.9342985741281844,128
+group,AdaptLocality,0.9887806209611276,128
+group,AdaptSuccessful,0.9154672685618269,128
+group,AdaptUnsuccessful,0.8581900650069862,128
+solo,Locality,0.9968607726410997,128
+solo,BlockVisibility,0.8369068988218248,128
+solo,RewardPrediction,0.9935810208559188,128
+solo,AdaptLocality,0.9923799184808195,128
