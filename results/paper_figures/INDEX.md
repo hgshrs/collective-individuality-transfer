@@ -1,0 +1,25 @@
+# Paper figures (results/paper_figures). PDF physical sizes (pt) and font sizes: labels 8 pt, ticks/legend 7 pt; panels are 3.4 in (244 pt) or 2.6 in wide and intended for single-column placement at 1:1, so printed text >= 7 pt (ticks) / 8 pt (labels). If a journal requires 8 pt minimum at print, place the 2.6-in panels at >= 1.15x or set tick labels to 8 pt. Colours tab10: C0 blue, C1 orange, C2 green, C3 red, C4 purple.
+
+fig1_legend.pdf	Legend for fig1_reliability and fig5_composition: dataset colours (tab10 C0 Chirkov, C1 Wu, C2 Hawkins) (legend only; saved with ~2 % padding, no further trim needed)
+fig1_reliability.pdf	Split-half reliability (first vs second half of the session) of individual parameters, grouped by trait class, for the three datasets (colour = dataset). Private processing 0.60-0.83; social attraction 0.17-0.61; selective (payoff-dependent) social learning 0.09-0.55 but <= 0.27 for the Chirkov quality interactions and the Hawkins selectivity measures; being attended to 0.22-0.24. Sources: results/phase0/split_half_reliability.csv, results/wu2025/{choice_reliability,ind_reliability}.csv, results/hawkins2023/{reliability,teacher_reliability}.csv.
+fig2a_transfer_chirkov.pdf	Chirkov et al.: out-of-fold r of tracking-phase individual parameters predicted from a linear search-phase z (PLS, 4 dims; n = 568), and of later visibility roles predicted from the first-3-min movement z (PCA 4; n = 477). Black ticks = split-half reliability of the target (none computed for roles). Sources: results/phase1/baselines_ridge_eb.csv (pls_z4), results/phase2/planB_r.csv.
+fig2b_transfer_wu.pdf	Wu et al.: out-of-fold r (8 folds of 4 sessions, n = 128) of group-round targets predicted from the solo-round z (PCA 4 of 21 movement/foraging statistics). Black ticks = split-half reliability of the target across group rounds. Source: results/wu2025/transfer_r.csv (solo_z4).
+fig2c_transfer_hawkins.pdf	Hawkins et al. Exp 1: out-of-fold r (10 folds of whole games, n = 682, within experiment x group size x field) of second-half targets predicted from the first-half search-state z (PCA 4). Black ticks = first-vs-second-half reliability of the target. Source: results/hawkins2023/transfer_r.csv (z4).
+fig2_legend.pdf	Legend shared by fig2a-c: bar colour = trait class of the target; black tick = split-half ceiling (legend only; saved with ~2 % padding, no further trim needed)
+fig3_roles_decomposition.pdf	Increment in marginal R2 of visibility roles (being attended to = in-degree; attending to others = out-degree) when adding, in order, own z, the other members' mean z and the within-group SD of z to a mixed model with group random intercept and a performance control. Group SD adds <= 0.012 everywhere (LRT p 0.22-0.96, except Hawkins attended p 0.048). Sources: results/phase2/planB_decomposition.csv (control = score_3min), results/wu2025/decomposition.csv, results/hawkins2023/decomposition.csv.
+fig4a_group_chirkov.pdf	Chirkov et al.: observed group score vs the score predicted by simulating each group with its members' individually fitted ABM policies (leave-one-group-out, seed mean, 103 groups; z within condition x speed). r = 0.55 [0.42, 0.67]. Sources: results/phase3/sim_runs.parquet (variant main), results/phase3/observed_group_metrics.csv.
+fig4b_group_wu.pdf	Wu et al.: observed group reward (mean of the 4 group rounds per session x environment, 64 cells) vs the zero-shot prediction from the members' mean solo-round reward in the same environment (z within environment). r = 0.55. Source: results/wu2025/group_rounds.csv.
+fig4c_group_hawkins.pdf	Hawkins et al.: second-half group score vs the members' mean first-half individual score (281 games with >= 2 players, Exp 1 and 3; both residualised within experiment x group size x field). r = 0.55 [0.44, 0.64]. Source: results/hawkins2023/group_table.csv.
+fig5_composition.pdf	Composition effect on group performance across datasets: change in out-of-sample r when within-group heterogeneity is added to a model that already carries the members' mean traits (Chirkov: individually fitted agents minus group-mean agents, D-1 ABM policy and D-2 neural policy, 103 groups; Wu: same contrast in the authors' grid ABM, 64 session x env cells, and member means + SDs minus means in leave-one-session-out ridge, 256 group rounds; Hawkins: means + SDs minus means, 169 games with >= 3 players). Session/group-cluster bootstrap 95 % CIs. Sources: results/phase3/eval_delta*.csv, results/wu2025/{sim_eval_delta,group_pred}.csv, results/hawkins2023/group_pred.csv.
+
+fig1_legend.pdf	135.019 x 37.2022 pts
+fig1_reliability.pdf	250.863 x 183.522 pts
+fig2a_transfer_chirkov.pdf	310.37 x 166.89 pts
+fig2b_transfer_wu.pdf	304.854 x 166.89 pts
+fig2c_transfer_hawkins.pdf	296.779 x 166.89 pts
+fig2_legend.pdf	283.35 x 25.6065 pts
+fig3_roles_decomposition.pdf	241.338 x 189.344 pts
+fig4a_group_chirkov.pdf	182.884 x 174.918 pts
+fig4b_group_wu.pdf	199.968 x 174.918 pts
+fig4c_group_hawkins.pdf	188.666 x 174.918 pts
+fig5_composition.pdf	277.008 x 144.714 pts
