@@ -4,3 +4,8 @@ Fig3	7.37 x 5.60 in	4423 x 3363 px @600 dpi	0.8 MB	OK
 Fig4	3.40 x 2.70 in	2039 x 1622 px @600 dpi	0.2 MB	OK
 Fig5	6.81 x 2.49 in	4086 x 1493 px @600 dpi	0.5 MB	OK
 Fig6	3.76 x 3.11 in	2256 x 1869 px @600 dpi	0.2 MB	OK
+S1_Fig	7.34 x 6.66 in	4406 x 3995 px @600 dpi	1.1 MB	OK
+S2_Fig	7.42 x 6.65 in	4454 x 3993 px @600 dpi	1.1 MB	OK
+S3_Fig	7.18 x 4.55 in	4310 x 2729 px @600 dpi	0.6 MB	OK
+S4_Fig	4.91 x 6.36 in	2944 x 3816 px @600 dpi	0.9 MB	OK
+S5_Fig	5.15 x 3.01 in	3090 x 1805 px @600 dpi	0.3 MB	OK

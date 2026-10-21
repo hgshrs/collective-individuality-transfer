@@ -27,3 +27,73 @@ fig4b_group_wu.pdf	153.908 x 160.119 pts
 fig4c_group_hawkins.pdf	153.908 x 160.266 pts
 fig5_composition.pdf	244.644 x 144.714 pts
 fig5_composition_pooled.pdf	246.316 x 166.89 pts
+
+## Supporting information panels (results/paper_figures/si, scripts/89; assembled into paper/figures/S1_Fig-S5_Fig by assemble.py). S1_Fig = s1_a-h + s1_i + s1_legend (4 x 2 scatter panels, controls bar, legend); S2_Fig = s2_* likewise (D-2); S3_Fig = s3_a, s3_b, s3_c (row) + s3_d; S4_Fig = s4_a_heatmap + s4_colorbar (row) + 2 x 2 block s4_b1-b4; S5_Fig = s5_a, s5_b + s5_legend. Same fonts as the main panels (ticks/legend/annotations 8 pt, labels 9 pt).
+
+si/s1_a_score.pdf	Chirkov D-1 (ABM policy): observed vs predicted (seed mean of the members'-own-policies simulation, leave-one-group-out) Score, z within condition x speed; blue slow, orange fast; r [95 % CI] from eval_r.csv; n = 103 groups. Sources: results/phase3/sim_runs.parquet, observed_group_metrics.csv, eval_r.csv.
+si/s1_b_tracking_time.pdf	Chirkov D-1 (ABM policy): observed vs predicted (seed mean of the members'-own-policies simulation, leave-one-group-out) Tracking time, z within condition x speed; blue slow, orange fast; r [95 % CI] from eval_r.csv; n = 103 groups. Sources: results/phase3/sim_runs.parquet, observed_group_metrics.csv, eval_r.csv.
+si/s1_c_pcr.pdf	Chirkov D-1 (ABM policy): observed vs predicted (seed mean of the members'-own-policies simulation, leave-one-group-out) Efficiency, z within condition x speed; blue slow, orange fast; r [95 % CI] from eval_r.csv; n = 103 groups. Sources: results/phase3/sim_runs.parquet, observed_group_metrics.csv, eval_r.csv.
+si/s1_d_med_dist.pdf	Chirkov D-1 (ABM policy): observed vs predicted (seed mean of the members'-own-policies simulation, leave-one-group-out) Median distance, z within condition x speed; blue slow, orange fast; r [95 % CI] from eval_r.csv; n = 103 groups. Sources: results/phase3/sim_runs.parquet, observed_group_metrics.csv, eval_r.csv.
+si/s1_e_in_deg.pdf	Chirkov D-1 (ABM policy): observed vs predicted (seed mean of the members'-own-policies simulation, leave-one-group-out) In-degree, z within condition x speed; blue slow, orange fast; r [95 % CI] from eval_r.csv; n = 103 groups. Sources: results/phase3/sim_runs.parquet, observed_group_metrics.csv, eval_r.csv.
+si/s1_f_out_deg.pdf	Chirkov D-1 (ABM policy): observed vs predicted (seed mean of the members'-own-policies simulation, leave-one-group-out) Out-degree, z within condition x speed; blue slow, orange fast; r [95 % CI] from eval_r.csv; n = 103 groups. Sources: results/phase3/sim_runs.parquet, observed_group_metrics.csv, eval_r.csv.
+si/s1_g_in_out_corr.pdf	Chirkov D-1 (ABM policy): observed vs predicted (seed mean of the members'-own-policies simulation, leave-one-group-out) In--out correlation, z within condition x speed; blue slow, orange fast; r [95 % CI] from eval_r.csv; n = 103 groups. Sources: results/phase3/sim_runs.parquet, observed_group_metrics.csv, eval_r.csv.
+si/s1_h_disc_gain.pdf	Chirkov D-1 (ABM policy): observed vs predicted (seed mean of the members'-own-policies simulation, leave-one-group-out) Discoverer gain, z within condition x speed; blue slow, orange fast; r [95 % CI] from eval_r.csv; n = 77 groups. Sources: results/phase3/sim_runs.parquet, observed_group_metrics.csv, eval_r.csv.
+si/s1_i_controls.pdf	Chirkov D-1 (ABM policy): r within cell between observed group metrics and the seed-mean prediction of each simulation variant (main, ctrl2b_gmean, ctrl3_nominal, ctrl4b_mps, ctrl4_shuffle, ctrl1_paper, ctrl2_avg); out-degree r ~ 0.48 for every variant reflects group size (4 vs 5 members) and is not policy information. Source: results/phase3/eval_r.csv.
+si/s1_legend.pdf	Legend for s1_i_controls: simulation variants (legend only; saved with ~2 % padding, no further trim needed)
+si/s2_a_score.pdf	Chirkov D-2 (neural policy): observed vs predicted (seed mean of the members'-own-policies simulation, leave-one-group-out) Score, z within condition x speed; blue slow, orange fast; r [95 % CI] from eval_r_d2.csv; n = 103 groups. Sources: results/phase3/sim_runs_d2.parquet, observed_group_metrics.csv, eval_r_d2.csv.
+si/s2_b_tracking_time.pdf	Chirkov D-2 (neural policy): observed vs predicted (seed mean of the members'-own-policies simulation, leave-one-group-out) Tracking time, z within condition x speed; blue slow, orange fast; r [95 % CI] from eval_r_d2.csv; n = 103 groups. Sources: results/phase3/sim_runs_d2.parquet, observed_group_metrics.csv, eval_r_d2.csv.
+si/s2_c_pcr.pdf	Chirkov D-2 (neural policy): observed vs predicted (seed mean of the members'-own-policies simulation, leave-one-group-out) Efficiency, z within condition x speed; blue slow, orange fast; r [95 % CI] from eval_r_d2.csv; n = 103 groups. Sources: results/phase3/sim_runs_d2.parquet, observed_group_metrics.csv, eval_r_d2.csv.
+si/s2_d_med_dist.pdf	Chirkov D-2 (neural policy): observed vs predicted (seed mean of the members'-own-policies simulation, leave-one-group-out) Median distance, z within condition x speed; blue slow, orange fast; r [95 % CI] from eval_r_d2.csv; n = 103 groups. Sources: results/phase3/sim_runs_d2.parquet, observed_group_metrics.csv, eval_r_d2.csv.
+si/s2_e_in_deg.pdf	Chirkov D-2 (neural policy): observed vs predicted (seed mean of the members'-own-policies simulation, leave-one-group-out) In-degree, z within condition x speed; blue slow, orange fast; r [95 % CI] from eval_r_d2.csv; n = 103 groups. Sources: results/phase3/sim_runs_d2.parquet, observed_group_metrics.csv, eval_r_d2.csv.
+si/s2_f_out_deg.pdf	Chirkov D-2 (neural policy): observed vs predicted (seed mean of the members'-own-policies simulation, leave-one-group-out) Out-degree, z within condition x speed; blue slow, orange fast; r [95 % CI] from eval_r_d2.csv; n = 103 groups. Sources: results/phase3/sim_runs_d2.parquet, observed_group_metrics.csv, eval_r_d2.csv.
+si/s2_g_in_out_corr.pdf	Chirkov D-2 (neural policy): observed vs predicted (seed mean of the members'-own-policies simulation, leave-one-group-out) In--out correlation, z within condition x speed; blue slow, orange fast; r [95 % CI] from eval_r_d2.csv; n = 103 groups. Sources: results/phase3/sim_runs_d2.parquet, observed_group_metrics.csv, eval_r_d2.csv.
+si/s2_h_disc_gain.pdf	Chirkov D-2 (neural policy): observed vs predicted (seed mean of the members'-own-policies simulation, leave-one-group-out) Discoverer gain, z within condition x speed; blue slow, orange fast; r [95 % CI] from eval_r_d2.csv; n = 77 groups. Sources: results/phase3/sim_runs_d2.parquet, observed_group_metrics.csv, eval_r_d2.csv.
+si/s2_i_controls.pdf	Chirkov D-2 (neural policy): r within cell between observed group metrics and the seed-mean prediction of each simulation variant (main, ctrl2b_gmean, ctrl3_nominal, ctrl1_pop, ctrl2_avg); out-degree r ~ 0.48 for every variant reflects group size (4 vs 5 members) and is not policy information. Source: results/phase3/eval_r_d2.csv.
+si/s2_legend.pdf	Legend for s2_i_controls: simulation variants (legend only; saved with ~2 % padding, no further trim needed)
+si/s3_a_no_mobility.pdf	Wu: observed group reward (mean of the 4 group rounds per session x environment, 64 cells) vs the zero-shot grid-ABM simulation with the members' fitted weights, without mobility term (variant main); blue random, orange smooth environment (as fig4b); r [95 % CI] from sim_mobility_eval.csv. Sources: results/wu2025/sim_runs.parquet, group_rounds.csv.
+si/s3_b_mobility.pdf	Wu: observed group reward (mean of the 4 group rounds per session x environment, 64 cells) vs the zero-shot grid-ABM simulation with the members' fitted weights, with mobility term (variant main_mob); blue random, orange smooth environment (as fig4b); r [95 % CI] from sim_mobility_eval.csv. Sources: results/wu2025/sim_runs_mobility.parquet, group_rounds.csv.
+si/s3_c_variants.pdf	Wu: r within environment (64 cells; session-cluster bootstrap 95 % CI) for the four simulation variants without (open) and with (filled) the per-agent mobility term p_i = solo path length / max. Source: results/wu2025/sim_mobility_eval.csv.
+si/s3_d_calibration.pdf	Wu: absolute group reward per environment (mean over cells and runs) for the simulation without mobility (main), with mobility (main_mob), group-mean agents with mobility (gmean_mob) and the observed value. Source: results/wu2025/sim_mobility_calibration.csv.
+si/s4_a_heatmap.pdf	Chirkov: social-rule search, r within cell between the seed-mean simulation (103 groups x 50 seeds) and the observed group metric for the baseline ABM rule (R0) and seven single-element modifications (R1 nearest other; R2 best-informed quality; R3 scanning while searching; R4 heading alignment; R5 tracker-only social information; R6 calmer tracking; R7 = R5 + R3); colour = r (diverging, symmetric +-0.6; colour bar in s4_colorbar). Source: results/phase3/social_rules_search.csv.
+si/s4_colorbar.pdf	Colour bar for s4_a_heatmap (r within cell, -0.6 to +0.6) (colour bar only; bbox tight, ~0 pt padding)
+si/s4_b1_disc_gain.pdf	Chirkov: level (mean over the 103 groups) of simulated Discoverer gain for rules R0-R7 (points) and the observed level (dashed line). Source: results/phase3/social_rules_levels.csv.
+si/s4_b2_in_out_corr.pdf	Chirkov: level (mean over the 103 groups) of simulated In--out correlation for rules R0-R7 (points) and the observed level (dashed line). Source: results/phase3/social_rules_levels.csv.
+si/s4_b3_in_deg.pdf	Chirkov: level (mean over the 103 groups) of simulated In-degree for rules R0-R7 (points) and the observed level (dashed line). Source: results/phase3/social_rules_levels.csv.
+si/s4_b4_tracking_time.pdf	Chirkov: level (mean over the 103 groups) of simulated Tracking time for rules R0-R7 (points) and the observed level (dashed line). Source: results/phase3/social_rules_levels.csv.
+si/s5_a_tracking_time.pdf	Environment validation: Tracking time of homogeneous paper-parameter agents on the Fig 5B grid (k in 0.1, 1, 10; resource speed 0.2-1.0; solo = triangles, 5 agents = circles; colour = resource speed), mesa ABM (100 runs) vs the vectorised re-implementation (200 runs); dashed = identity; r = 0.997. Source: results/phase3/env_validation.csv.
+si/s5_b_pcr.pdf	Environment validation: Efficiency (points per tracking step) of homogeneous paper-parameter agents on the Fig 5B grid (k in 0.1, 1, 10; resource speed 0.2-1.0; solo = triangles, 5 agents = circles; colour = resource speed), mesa ABM (100 runs) vs the vectorised re-implementation (200 runs); dashed = identity; r = 0.996. Source: results/phase3/env_validation.csv.
+si/s5_legend.pdf	Legend for s5_a/b: colour = resource speed, marker = solo vs group (legend only; saved with ~2 % padding, no further trim needed)
+
+si/s1_a_score.pdf	125.27 x 121.628 pts
+si/s1_b_tracking_time.pdf	125.27 x 121.628 pts
+si/s1_c_pcr.pdf	125.27 x 121.628 pts
+si/s1_d_med_dist.pdf	125.27 x 121.628 pts
+si/s1_e_in_deg.pdf	125.27 x 121.628 pts
+si/s1_f_out_deg.pdf	125.27 x 121.628 pts
+si/s1_g_in_out_corr.pdf	125.27 x 121.628 pts
+si/s1_h_disc_gain.pdf	130.987 x 121.628 pts
+si/s1_i_controls.pdf	419.643 x 141.488 pts
+si/s1_legend.pdf	423.635 x 29.2646 pts
+si/s2_a_score.pdf	125.27 x 121.628 pts
+si/s2_b_tracking_time.pdf	125.27 x 121.628 pts
+si/s2_c_pcr.pdf	125.27 x 121.628 pts
+si/s2_d_med_dist.pdf	125.27 x 121.628 pts
+si/s2_e_in_deg.pdf	130.987 x 121.628 pts
+si/s2_f_out_deg.pdf	125.27 x 121.628 pts
+si/s2_g_in_out_corr.pdf	125.27 x 121.628 pts
+si/s2_h_disc_gain.pdf	130.987 x 121.628 pts
+si/s2_i_controls.pdf	419.643 x 141.488 pts
+si/s2_legend.pdf	306.716 x 29.095 pts
+si/s3_a_no_mobility.pdf	155.762 x 163.424 pts
+si/s3_b_mobility.pdf	155.762 x 163.424 pts
+si/s3_c_variants.pdf	189.714 x 149.872 pts
+si/s3_d_calibration.pdf	285.139 x 128.568 pts
+si/s4_a_heatmap.pdf	279.186 x 182.34 pts
+si/s4_b1_disc_gain.pdf	143.081 x 111.936 pts
+si/s4_b2_in_out_corr.pdf	149.667 x 114.686 pts
+si/s4_b3_in_deg.pdf	147.512 x 111.936 pts
+si/s4_b4_tracking_time.pdf	143.081 x 111.936 pts
+si/s4_colorbar.pdf	64.0351 x 177.296 pts
+si/s5_a_tracking_time.pdf	170.05 x 163.043 pts
+si/s5_b_pcr.pdf	164.695 x 163.208 pts
+si/s5_legend.pdf	366.773 x 29.2646 pts
