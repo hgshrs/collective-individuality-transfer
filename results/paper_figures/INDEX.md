@@ -1,5 +1,6 @@
-# Paper figures (results/paper_figures). PDF physical sizes (pt) and font sizes: labels 8 pt, ticks/legend 7 pt, Fig 1 point labels 5.5 pt (annotations; enlarge to 7 pt if the journal requires); panels are 3.4 in (244 pt) or 2.6 in wide and intended for single-column placement at 1:1. If a journal requires 8 pt minimum at print, place the 2.6-in panels at >= 1.15x or set tick labels to 8 pt. Colours tab10: C0 blue, C1 orange, C2 green, C3 red, C4 purple.
+# Paper figures (results/paper_figures). PDF physical sizes (pt) and font sizes: labels 8 pt, ticks/legend 7 pt, Fig 1 point labels 7 pt (annotations); single-column panels are <= 3.4 in (244.8 pt) wide for 1:1 placement, Fig 4a-c are 2.14 in wide so that three fit a 7.16-in double column at 1:1 (print-size table: print_size_check.md, scripts/87). For an 8-pt rule place every panel at >= 1.15x or raise tick/legend fonts to 8 pt in scripts/80. Colours tab10: C0 blue, C1 orange, C2 green, C3 red, C4 purple. 2026-10-21: Fig 1 labels enlarged, Fig 2/4/5 narrowed (data unchanged); fig0_concept and fig5_composition_pooled added.
 
+fig0_concept.pdf	Conceptual figure (scripts/86): individual style z extracted from the private phase (alone, or away from the resource) and the four directions in which its transfer was tested: (1) private processing in the group (transfers up to the split-half ceiling, r 0.3-0.7), (2) social attraction (partial, r 0.1-0.6), (3) selective social learning (reliable in the group, 0.45-0.55, but not transferable, r ~ 0; dashed arrow), (4) roles and group performance (own z + others' mean, additive; group performance = members' mean, no composition effect). Same pattern in all three datasets.
 fig1_legend.pdf	Legend for fig1_reliability and fig5_composition: dataset colours (tab10 C0 Chirkov, C1 Wu, C2 Hawkins) (legend only; saved with ~2 % padding, no further trim needed)
 fig1_reliability.pdf	Split-half reliability (first vs second half of the session) of individual parameters, grouped by trait class, for the three datasets (colour = dataset; each point is one parameter, named beside it). Private processing 0.60-0.83; social attraction 0.17-0.61; selective (payoff-dependent) social learning 0.09-0.55 but <= 0.27 for the Chirkov quality interactions and the Hawkins selectivity measures; being attended to 0.22-0.24. Sources: results/phase0/split_half_reliability.csv, results/wu2025/{choice_reliability,ind_reliability}.csv, results/hawkins2023/{reliability,teacher_reliability}.csv.
 fig2a_transfer_chirkov.pdf	Chirkov et al.: out-of-fold r of tracking-phase individual parameters predicted from a linear search-phase z (PLS, 4 dims; n = 568), and of later visibility roles predicted from the first-3-min movement z (PCA 4; n = 477). Black ticks = split-half reliability of the target (none computed for roles). Sources: results/phase1/baselines_ridge_eb.csv (pls_z4), results/phase2/planB_r.csv.
@@ -11,15 +12,18 @@ fig4a_group_chirkov.pdf	Chirkov et al.: observed group score vs the score predic
 fig4b_group_wu.pdf	Wu et al.: observed group reward (mean of the 4 group rounds per session x environment, 64 cells) vs the zero-shot prediction from the members' mean solo-round reward in the same environment (z within environment). r = 0.55. Source: results/wu2025/group_rounds.csv.
 fig4c_group_hawkins.pdf	Hawkins et al.: second-half group score vs the members' mean first-half individual score (281 games with >= 2 players, Exp 1 and 3; both residualised within experiment x group size x field). r = 0.55 [0.44, 0.64]. Source: results/hawkins2023/group_table.csv.
 fig5_composition.pdf	Composition effect on group performance across datasets: change in out-of-sample r when within-group heterogeneity is added to a model that already carries the members' mean traits (Chirkov: individually fitted agents minus group-mean agents, D-1 ABM policy and D-2 neural policy, 103 groups; Wu: same contrast in the authors' grid ABM, 64 session x env cells, and member means + SDs minus means in leave-one-session-out ridge, 256 group rounds; Hawkins: means + SDs minus means, 169 games with >= 3 players). Session/group-cluster bootstrap 95 % CIs. Sources: results/phase3/eval_delta*.csv, results/wu2025/{sim_eval_delta,group_pred}.csv, results/hawkins2023/group_pred.csv.
+fig5_composition_pooled.pdf	As fig5_composition plus the pooled composition effect (scripts/81; results/pooled/composition_pooled.csv): stratified cluster bootstrap over all units; 'one per dataset' = Chirkov D-1 ABM + Wu statistical + Hawkins statistical (528 units, 304 clusters): Delta r -0.04 [-0.07, -0.01], one-sided 95 % upper bound -0.01, TOST equivalence bound 0.06; 'all five' contrasts (695 units): Delta r +0.01 [-0.03, 0.05], upper bound 0.04. Black diamonds = pooled.
 
+fig0_concept.pdf	245.98 x 180 pts
 fig1_legend.pdf	135.019 x 37.2022 pts
 fig1_reliability.pdf	246.016 x 233.418 pts
-fig2a_transfer_chirkov.pdf	310.37 x 166.89 pts
-fig2b_transfer_wu.pdf	304.854 x 166.89 pts
-fig2c_transfer_hawkins.pdf	296.779 x 166.89 pts
 fig2_legend.pdf	283.35 x 25.6065 pts
+fig2a_transfer_chirkov.pdf	241.545 x 166.89 pts
+fig2b_transfer_wu.pdf	236.029 x 166.89 pts
+fig2c_transfer_hawkins.pdf	227.954 x 166.89 pts
 fig3_roles_decomposition.pdf	241.338 x 189.344 pts
-fig4a_group_chirkov.pdf	182.884 x 174.918 pts
-fig4b_group_wu.pdf	199.968 x 174.918 pts
-fig4c_group_hawkins.pdf	188.666 x 174.918 pts
-fig5_composition.pdf	277.008 x 144.714 pts
+fig4a_group_chirkov.pdf	153.908 x 160.119 pts
+fig4b_group_wu.pdf	153.908 x 160.119 pts
+fig4c_group_hawkins.pdf	153.908 x 160.266 pts
+fig5_composition.pdf	244.644 x 144.714 pts
+fig5_composition_pooled.pdf	246.316 x 166.89 pts

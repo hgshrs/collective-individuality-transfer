@@ -1,9 +1,9 @@
 """Paper figures (one panel = one PDF) across the three datasets. Style per CLAUDE.md: usetex + Helvetica (sfmath),
 tab10, no grid, no titles, transparent, bbox tight. Also writes PNG previews and captions.txt (one line per file)."""
-import numpy as np, pandas as pd, matplotlib
+import sys, numpy as np, pandas as pd, matplotlib
 matplotlib.use('Agg'); import matplotlib.pyplot as plt
 from pathlib import Path
-P = Path('/home/higashi/Research/20260924_collective'); OUT = P / 'results/paper_figures'; OUT.mkdir(exist_ok=True)
+P = Path('/home/higashi/Research/20260924_collective'); OUT = Path(sys.argv[1]) if len(sys.argv) > 1 else P / 'results/paper_figures'; OUT.mkdir(exist_ok=True, parents=True)  # optional output dir (to regenerate selected files only)
 plt.rcParams.update({'text.usetex': True, 'font.family': 'sans-serif', 'font.sans-serif': ['Helvetica'],
                      'text.latex.preamble': r'\usepackage{helvet}\usepackage{sfmath}\renewcommand{\familydefault}{\sfdefault}',
                      'font.size': 8, 'axes.labelsize': 8, 'xtick.labelsize': 7, 'ytick.labelsize': 7, 'legend.fontsize': 7,
@@ -44,7 +44,7 @@ for cls in classes:
     y0 = y
     for _, r in sub.iterrows():
         ax.plot([0, r.r], [y, y], color=DS[r.ds], lw=0.8, alpha=0.5); ax.plot(r.r, y, 'o', color=DS[r.ds], ms=4)
-        ax.text(r.r + 0.02, y, r.label, va='center', ha='left', fontsize=5.5, color='0.25'); y += 1
+        ax.text(r.r + 0.02, y, r.label, va='center', ha='left', fontsize=7, color='0.25'); y += 1  # 7 pt (was 5.5; print-size check 2026-10-21)
     yt.append((y0 + y - 1) / 2); ytl.append(cls.replace(' ', '\n') if cls != 'Being attended to' else 'Being\nattended to'); sep.append(y - 0.5); y += 0.8
 ax.set_yticks(yt); ax.set_yticklabels(ytl, fontsize=7)
 for s in sep[:-1]: ax.axhline(s + 0.4, color='0.8', lw=0.5)
@@ -55,14 +55,14 @@ save(fig, 'fig1_reliability', 'Split-half reliability (first vs second half of t
 
 # ---------------- Fig 2: transfer (z -> targets) per dataset ----------------
 def transfer_panel(rows, name, caption, xlim=(-0.3, 0.9)):
-    fig, ax = plt.subplots(figsize=(3.4, 2.3))
+    fig, ax = plt.subplots(figsize=(2.1, 2.3))  # 2026-10-21: 2.1 in so that the PDF (with tick labels) is <= 3.4 in wide
     labels = [r[0] for r in rows]; vals = np.array([r[1] for r in rows]); ceil = np.array([r[2] for r in rows], float); cls = [r[3] for r in rows]
     yy = np.arange(len(rows))[::-1]
     cols = {'private': C[0], 'social': C[1], 'selective': C[3], 'role': C[2], 'performance': C[4]}
     ax.barh(yy, vals, height=0.6, color=[cols[c] for c in cls])
     for yi, ce in zip(yy, ceil):
         if not np.isnan(ce): ax.plot([ce, ce], [yi - 0.38, yi + 0.38], color='k', lw=1.2)
-    ax.axvline(0, color='k', lw=0.5); ax.set_yticks(yy); ax.set_yticklabels(labels, fontsize=7); ax.set_xlim(*xlim); ax.set_xlabel('Out-of-fold $r$ (prediction from private phase)')
+    ax.axvline(0, color='k', lw=0.5); ax.set_yticks(yy); ax.set_yticklabels(labels, fontsize=7); ax.set_xlim(*xlim); ax.set_xlabel('Out-of-fold $r$ from the private phase')  # shortened 2026-10-21 (print width)
     save(fig, name, caption)
     return cols
 transfer_panel([('Intercept (turning rate)', 0.499, 0.763, 'private'), ('Detector weight', 0.301, 0.605, 'private'), ('Social position weight', 0.157, 0.298, 'social'),
@@ -108,28 +108,28 @@ def zcell(s, key): return s.groupby(key).transform(lambda v: (v - v.mean()) / v.
 sim = pd.read_parquet(P / 'results/phase3/sim_runs.parquet'); sim = sim[sim.variant == 'main'].groupby('group')['score'].mean()
 obs = pd.read_csv(P / 'results/phase3/observed_group_metrics.csv').set_index('group')
 d = obs[['score', 'cell', 'speed']].join(sim.rename('sim')).dropna(); d['obs_z'] = zcell(d['score'], d['cell']); d['sim_z'] = zcell(d['sim'], d['cell'])
-fig, ax = plt.subplots(figsize=(2.6, 2.4))
+fig, ax = plt.subplots(figsize=(2.15, 2.0))  # 2026-10-21: narrower so that three panels fit a 7.16-in double column at 1:1
 for sp, col, lab in [('slow', C[0], 'slow resource'), ('fast', C[1], 'fast resource')]:
     m = d.speed == sp; ax.plot(d.sim_z[m], d.obs_z[m], 'o', ms=3, color=col, alpha=0.75, label=lab, mew=0)
 r = np.corrcoef(d.sim_z, d.obs_z)[0, 1]; ax.text(0.04, 0.95, f'$r = {r:.2f}$ (103 groups)', transform=ax.transAxes, va='top', fontsize=7)
-ax.set_xlabel('Predicted group score ($z$ within condition)'); ax.set_ylabel('Observed group score ($z$)'); ax.legend(frameon=False, loc='lower right'); ax.set_aspect('equal'); ax.set_xlim(-3, 3); ax.set_ylim(-3, 3)
+ax.set_xlabel('Predicted group score\n($z$ within condition)'); ax.set_ylabel('Observed group score ($z$)'); ax.legend(frameon=False, loc='lower right'); ax.set_aspect('equal'); ax.set_xlim(-3, 3); ax.set_ylim(-3, 3)
 save(fig, 'fig4a_group_chirkov', 'Chirkov et al.: observed group score vs the score predicted by simulating each group with its members\' individually fitted ABM policies (leave-one-group-out, seed mean, 103 groups; z within condition x speed). r = 0.55 [0.42, 0.67]. Sources: results/phase3/sim_runs.parquet (variant main), results/phase3/observed_group_metrics.csv.')
 # Wu: nominal (members' mean solo reward) vs group reward, per session x env
 gr = pd.read_csv(P / 'results/wu2025/group_rounds.csv'); ge = gr.groupby(['session', 'env'])[['total_reward', 'nominal_reward']].mean().reset_index()
 ge['obs_z'] = zcell(ge['total_reward'], ge['env']); ge['pred_z'] = zcell(ge['nominal_reward'], ge['env'])
-fig, ax = plt.subplots(figsize=(2.6, 2.4))
+fig, ax = plt.subplots(figsize=(2.15, 2.0))  # 2026-10-21: narrower so that three panels fit a 7.16-in double column at 1:1
 for e, col, lab in [('random', C[0], 'random environment'), ('smooth', C[1], 'smooth environment')]:
     m = ge.env == e; ax.plot(ge.pred_z[m], ge.obs_z[m], 'o', ms=3, color=col, alpha=0.75, label=lab, mew=0)
 r = np.corrcoef(ge.pred_z, ge.obs_z)[0, 1]; ax.text(0.04, 0.95, f'$r = {r:.2f}$ (32 groups $\\times$ 2)', transform=ax.transAxes, va='top', fontsize=7)
-ax.set_xlabel("Members' mean solo reward ($z$ within environment)"); ax.set_ylabel('Observed group reward ($z$)'); ax.legend(frameon=False, loc='lower right'); ax.set_aspect('equal'); ax.set_xlim(-3, 3); ax.set_ylim(-3, 3)
+ax.set_xlabel("Members' mean solo reward\n($z$ within environment)"); ax.set_ylabel('Observed group reward ($z$)'); ax.legend(frameon=False, loc='lower right'); ax.set_aspect('equal'); ax.set_xlim(-3, 3); ax.set_ylim(-3, 3)
 save(fig, 'fig4b_group_wu', 'Wu et al.: observed group reward (mean of the 4 group rounds per session x environment, 64 cells) vs the zero-shot prediction from the members\' mean solo-round reward in the same environment (z within environment). r = 0.55. Source: results/wu2025/group_rounds.csv.')
 # Hawkins: members' mean first-half score vs second-half group score (residualised), games >= 2
 gt = pd.read_csv(P / 'results/hawkins2023/group_table.csv')
-fig, ax = plt.subplots(figsize=(2.6, 2.4))
+fig, ax = plt.subplots(figsize=(2.15, 2.0))  # 2026-10-21: narrower so that three panels fit a 7.16-in double column at 1:1
 for e, col, lab in [(1, C[0], 'Exp. 1 (binary spotlight)'), (3, C[1], 'Exp. 3 (gradient field)')]:
     m = gt.experiment == e; ax.plot(gt.mean_score1[m], gt.score2[m], 'o', ms=3, color=col, alpha=0.75, label=lab, mew=0)
 r = np.corrcoef(gt.mean_score1, gt.score2)[0, 1]; ax.text(0.04, 0.95, f'$r = {r:.2f}$ ({len(gt)} groups)', transform=ax.transAxes, va='top', fontsize=7)
-ax.set_xlabel("Members' mean first-half score ($z$ within cell)"); ax.set_ylabel('Second-half group score ($z$)'); ax.legend(frameon=False, loc='lower right'); ax.set_aspect('equal'); ax.set_xlim(-3, 3); ax.set_ylim(-3, 3)
+ax.set_xlabel("Members' mean first-half score\n($z$ within cell)"); ax.set_ylabel('Second-half group score ($z$)'); ax.legend(frameon=False, loc='lower right'); ax.set_aspect('equal'); ax.set_xlim(-3, 3); ax.set_ylim(-3, 3)
 save(fig, 'fig4c_group_hawkins', 'Hawkins et al.: second-half group score vs the members\' mean first-half individual score (281 games with >= 2 players, Exp 1 and 3; both residualised within experiment x group size x field). r = 0.55 [0.44, 0.64]. Source: results/hawkins2023/group_table.csv.')
 
 # ---------------- Fig 5: composition effect forest plot ----------------
@@ -138,7 +138,7 @@ rows = [('Chirkov, ABM policy', 'heterogeneous agents $-$ group-mean agents', 0.
         ('Wu, grid ABM', 'heterogeneous agents $-$ group-mean agents', 0.162, -0.036, 0.370, 'Wu'),
         ('Wu, statistical', 'member means $+$ SDs $-$ member means', -0.113, -0.176, -0.044, 'Wu'),
         ('Hawkins, statistical', 'member means $+$ SDs $-$ member means', -0.026, -0.068, 0.012, 'Hawkins')]
-fig, ax = plt.subplots(figsize=(3.4, 1.9))
+fig, ax = plt.subplots(figsize=(2.8, 1.9))  # 2026-10-21: narrower so that the PDF is <= 3.4 in wide
 yy = np.arange(len(rows))[::-1]
 for yi, (lab, kind, d_, lo, hi, ds) in zip(yy, rows):
     ax.plot([lo, hi], [yi, yi], color=DS[ds], lw=1.2); ax.plot(d_, yi, 'o', color=DS[ds], ms=4)
