@@ -1,12 +1,13 @@
 """Paper figures (one panel = one PDF) across the three datasets. Style per CLAUDE.md: usetex + Helvetica (sfmath),
-tab10, no grid, no titles, transparent, bbox tight. Also writes PNG previews and captions.txt (one line per file)."""
+tab10, no grid, no titles, transparent, bbox tight. Fonts: PLOS Computational Biology (8-12 pt at final size): labels 9 pt,
+ticks/legend/annotations 8 pt. Panels are assembled into PLOS multi-panel figures by paper/figures/assemble.py. Also writes PNG previews and captions.txt (one line per file)."""
 import sys, numpy as np, pandas as pd, matplotlib
 matplotlib.use('Agg'); import matplotlib.pyplot as plt
 from pathlib import Path
 P = Path('/home/higashi/Research/20260924_collective'); OUT = Path(sys.argv[1]) if len(sys.argv) > 1 else P / 'results/paper_figures'; OUT.mkdir(exist_ok=True, parents=True)  # optional output dir (to regenerate selected files only)
 plt.rcParams.update({'text.usetex': True, 'font.family': 'sans-serif', 'font.sans-serif': ['Helvetica'],
                      'text.latex.preamble': r'\usepackage{helvet}\usepackage{sfmath}\renewcommand{\familydefault}{\sfdefault}',
-                     'font.size': 8, 'axes.labelsize': 8, 'xtick.labelsize': 7, 'ytick.labelsize': 7, 'legend.fontsize': 7,
+                     'font.size': 8, 'axes.labelsize': 9, 'xtick.labelsize': 8, 'ytick.labelsize': 8, 'legend.fontsize': 8,  # PLOS Comput Biol: 8-12 pt (2026-10-21)
                      'axes.spines.top': False, 'axes.spines.right': False, 'axes.linewidth': 0.6, 'xtick.major.width': 0.6, 'ytick.major.width': 0.6,
                      'savefig.transparent': True, 'savefig.bbox': 'tight', 'pdf.fonttype': 42})
 C = plt.get_cmap('tab10').colors
@@ -44,9 +45,9 @@ for cls in classes:
     y0 = y
     for _, r in sub.iterrows():
         ax.plot([0, r.r], [y, y], color=DS[r.ds], lw=0.8, alpha=0.5); ax.plot(r.r, y, 'o', color=DS[r.ds], ms=4)
-        ax.text(r.r + 0.02, y, r.label, va='center', ha='left', fontsize=7, color='0.25'); y += 1  # 7 pt (was 5.5; print-size check 2026-10-21)
+        ax.text(r.r + 0.02, y, r.label, va='center', ha='left', fontsize=8, color='0.25'); y += 1  # 8 pt (PLOS; was 5.5)
     yt.append((y0 + y - 1) / 2); ytl.append(cls.replace(' ', '\n') if cls != 'Being attended to' else 'Being\nattended to'); sep.append(y - 0.5); y += 0.8
-ax.set_yticks(yt); ax.set_yticklabels(ytl, fontsize=7)
+ax.set_yticks(yt); ax.set_yticklabels(ytl, fontsize=8)
 for s in sep[:-1]: ax.axhline(s + 0.4, color='0.8', lw=0.5)
 ax.set_xlim(0, 1.25); ax.set_xticks([0, 0.2, 0.4, 0.6, 0.8, 1.0]); ax.set_xlabel('Split-half reliability $r$')
 ax.invert_yaxis()
@@ -62,7 +63,7 @@ def transfer_panel(rows, name, caption, xlim=(-0.3, 0.9)):
     ax.barh(yy, vals, height=0.6, color=[cols[c] for c in cls])
     for yi, ce in zip(yy, ceil):
         if not np.isnan(ce): ax.plot([ce, ce], [yi - 0.38, yi + 0.38], color='k', lw=1.2)
-    ax.axvline(0, color='k', lw=0.5); ax.set_yticks(yy); ax.set_yticklabels(labels, fontsize=7); ax.set_xlim(*xlim); ax.set_xlabel('Out-of-fold $r$ from the private phase')  # shortened 2026-10-21 (print width)
+    ax.axvline(0, color='k', lw=0.5); ax.set_yticks(yy); ax.set_yticklabels(labels, fontsize=8); ax.set_xlim(*xlim); ax.set_xlabel('Out-of-fold $r$ from the private phase')  # shortened 2026-10-21 (print width)
     save(fig, name, caption)
     return cols
 transfer_panel([('Intercept (turning rate)', 0.499, 0.763, 'private'), ('Detector weight', 0.301, 0.605, 'private'), ('Social position weight', 0.157, 0.298, 'social'),
@@ -95,10 +96,10 @@ for ds in ['Chirkov', 'Wu', 'Hawkins']:
             ax.bar(x, h, bottom=bottom, width=0.7, color=col, label=lab if x == 0 else None); bottom += h
         xt.append(x); xtl.append({'in': 'attended', 'out': 'attending'}[role]); x += 1
     x += 0.6
-ax.set_xticks(xt); ax.set_xticklabels(xtl, fontsize=7, rotation=45, ha='right')
+ax.set_xticks(xt); ax.set_xticklabels(xtl, fontsize=8, rotation=45, ha='right')
 import matplotlib.transforms as mtr
 tf = mtr.blended_transform_factory(ax.transData, ax.transAxes)
-for i, ds in enumerate(['Chirkov et al.', 'Wu et al.', 'Hawkins et al.']): ax.text(i * 2.6 + 0.5, -0.36, ds, ha='center', va='top', fontsize=7, transform=tf)
+for i, ds in enumerate(['Chirkov et al.', 'Wu et al.', 'Hawkins et al.']): ax.text(i * 2.6 + 0.5, -0.36, ds, ha='center', va='top', fontsize=8, transform=tf)
 ax.set_ylabel('Increment in marginal $R^2$'); ax.set_ylim(0, 0.2); ax.legend(frameon=False, loc='upper right')
 save(fig, 'fig3_roles_decomposition', 'Increment in marginal R2 of visibility roles (being attended to = in-degree; attending to others = out-degree) when adding, in order, own z, the other members\' mean z and the within-group SD of z to a mixed model with group random intercept and a performance control. Group SD adds <= 0.012 everywhere (LRT p 0.22-0.96, except Hawkins attended p 0.048). Sources: results/phase2/planB_decomposition.csv (control = score_3min), results/wu2025/decomposition.csv, results/hawkins2023/decomposition.csv.')
 
@@ -111,7 +112,7 @@ d = obs[['score', 'cell', 'speed']].join(sim.rename('sim')).dropna(); d['obs_z']
 fig, ax = plt.subplots(figsize=(2.15, 2.0))  # 2026-10-21: narrower so that three panels fit a 7.16-in double column at 1:1
 for sp, col, lab in [('slow', C[0], 'slow resource'), ('fast', C[1], 'fast resource')]:
     m = d.speed == sp; ax.plot(d.sim_z[m], d.obs_z[m], 'o', ms=3, color=col, alpha=0.75, label=lab, mew=0)
-r = np.corrcoef(d.sim_z, d.obs_z)[0, 1]; ax.text(0.04, 0.95, f'$r = {r:.2f}$ (103 groups)', transform=ax.transAxes, va='top', fontsize=7)
+r = np.corrcoef(d.sim_z, d.obs_z)[0, 1]; ax.text(0.04, 0.95, f'$r = {r:.2f}$ (103 groups)', transform=ax.transAxes, va='top', fontsize=8)
 ax.set_xlabel('Predicted group score\n($z$ within condition)'); ax.set_ylabel('Observed group score ($z$)'); ax.legend(frameon=False, loc='lower right'); ax.set_aspect('equal'); ax.set_xlim(-3, 3); ax.set_ylim(-3, 3)
 save(fig, 'fig4a_group_chirkov', 'Chirkov et al.: observed group score vs the score predicted by simulating each group with its members\' individually fitted ABM policies (leave-one-group-out, seed mean, 103 groups; z within condition x speed). r = 0.55 [0.42, 0.67]. Sources: results/phase3/sim_runs.parquet (variant main), results/phase3/observed_group_metrics.csv.')
 # Wu: nominal (members' mean solo reward) vs group reward, per session x env
@@ -120,7 +121,7 @@ ge['obs_z'] = zcell(ge['total_reward'], ge['env']); ge['pred_z'] = zcell(ge['nom
 fig, ax = plt.subplots(figsize=(2.15, 2.0))  # 2026-10-21: narrower so that three panels fit a 7.16-in double column at 1:1
 for e, col, lab in [('random', C[0], 'random environment'), ('smooth', C[1], 'smooth environment')]:
     m = ge.env == e; ax.plot(ge.pred_z[m], ge.obs_z[m], 'o', ms=3, color=col, alpha=0.75, label=lab, mew=0)
-r = np.corrcoef(ge.pred_z, ge.obs_z)[0, 1]; ax.text(0.04, 0.95, f'$r = {r:.2f}$ (32 groups $\\times$ 2)', transform=ax.transAxes, va='top', fontsize=7)
+r = np.corrcoef(ge.pred_z, ge.obs_z)[0, 1]; ax.text(0.04, 0.95, f'$r = {r:.2f}$ (32 groups $\\times$ 2)', transform=ax.transAxes, va='top', fontsize=8)
 ax.set_xlabel("Members' mean solo reward\n($z$ within environment)"); ax.set_ylabel('Observed group reward ($z$)'); ax.legend(frameon=False, loc='lower right'); ax.set_aspect('equal'); ax.set_xlim(-3, 3); ax.set_ylim(-3, 3)
 save(fig, 'fig4b_group_wu', 'Wu et al.: observed group reward (mean of the 4 group rounds per session x environment, 64 cells) vs the zero-shot prediction from the members\' mean solo-round reward in the same environment (z within environment). r = 0.55. Source: results/wu2025/group_rounds.csv.')
 # Hawkins: members' mean first-half score vs second-half group score (residualised), games >= 2
@@ -128,7 +129,7 @@ gt = pd.read_csv(P / 'results/hawkins2023/group_table.csv')
 fig, ax = plt.subplots(figsize=(2.15, 2.0))  # 2026-10-21: narrower so that three panels fit a 7.16-in double column at 1:1
 for e, col, lab in [(1, C[0], 'Exp. 1 (binary spotlight)'), (3, C[1], 'Exp. 3 (gradient field)')]:
     m = gt.experiment == e; ax.plot(gt.mean_score1[m], gt.score2[m], 'o', ms=3, color=col, alpha=0.75, label=lab, mew=0)
-r = np.corrcoef(gt.mean_score1, gt.score2)[0, 1]; ax.text(0.04, 0.95, f'$r = {r:.2f}$ ({len(gt)} groups)', transform=ax.transAxes, va='top', fontsize=7)
+r = np.corrcoef(gt.mean_score1, gt.score2)[0, 1]; ax.text(0.04, 0.95, f'$r = {r:.2f}$ ({len(gt)} groups)', transform=ax.transAxes, va='top', fontsize=8)
 ax.set_xlabel("Members' mean first-half score\n($z$ within cell)"); ax.set_ylabel('Second-half group score ($z$)'); ax.legend(frameon=False, loc='lower right'); ax.set_aspect('equal'); ax.set_xlim(-3, 3); ax.set_ylim(-3, 3)
 save(fig, 'fig4c_group_hawkins', 'Hawkins et al.: second-half group score vs the members\' mean first-half individual score (281 games with >= 2 players, Exp 1 and 3; both residualised within experiment x group size x field). r = 0.55 [0.44, 0.64]. Source: results/hawkins2023/group_table.csv.')
 
@@ -142,7 +143,7 @@ fig, ax = plt.subplots(figsize=(2.8, 1.9))  # 2026-10-21: narrower so that the P
 yy = np.arange(len(rows))[::-1]
 for yi, (lab, kind, d_, lo, hi, ds) in zip(yy, rows):
     ax.plot([lo, hi], [yi, yi], color=DS[ds], lw=1.2); ax.plot(d_, yi, 'o', color=DS[ds], ms=4)
-ax.axvline(0, color='k', lw=0.5); ax.set_yticks(yy); ax.set_yticklabels([r[0] for r in rows], fontsize=7)
+ax.axvline(0, color='k', lw=0.5); ax.set_yticks(yy); ax.set_yticklabels([r[0] for r in rows], fontsize=8)
 ax.set_xlabel('$\\Delta r$ from within-group heterogeneity (95\\% CI)'); ax.set_xlim(-0.25, 0.45)
 save(fig, 'fig5_composition', 'Composition effect on group performance across datasets: change in out-of-sample r when within-group heterogeneity is added to a model that already carries the members\' mean traits (Chirkov: individually fitted agents minus group-mean agents, D-1 ABM policy and D-2 neural policy, 103 groups; Wu: same contrast in the authors\' grid ABM, 64 session x env cells, and member means + SDs minus means in leave-one-session-out ridge, 256 group rounds; Hawkins: means + SDs minus means, 169 games with >= 3 players). Session/group-cluster bootstrap 95 % CIs. Sources: results/phase3/eval_delta*.csv, results/wu2025/{sim_eval_delta,group_pred}.csv, results/hawkins2023/group_pred.csv.')
 open(OUT / 'captions.txt', 'w').write('\n'.join(caps) + '\n')

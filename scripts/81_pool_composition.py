@@ -99,7 +99,7 @@ pd.set_option('display.width', 250); print(res.round(3).to_string())
 import matplotlib; matplotlib.use('Agg'); import matplotlib.pyplot as plt
 plt.rcParams.update({'text.usetex': True, 'font.family': 'sans-serif', 'font.sans-serif': ['Helvetica'],
                      'text.latex.preamble': r'\usepackage{helvet}\usepackage{sfmath}\renewcommand{\familydefault}{\sfdefault}',
-                     'font.size': 8, 'axes.labelsize': 8, 'xtick.labelsize': 7, 'ytick.labelsize': 7, 'legend.fontsize': 7,
+                     'font.size': 8, 'axes.labelsize': 9, 'xtick.labelsize': 8, 'ytick.labelsize': 8, 'legend.fontsize': 8,
                      'axes.spines.top': False, 'axes.spines.right': False, 'axes.linewidth': 0.6, 'xtick.major.width': 0.6, 'ytick.major.width': 0.6,
                      'savefig.transparent': True, 'savefig.bbox': 'tight', 'pdf.fonttype': 42})
 C = plt.get_cmap('tab10').colors; DS = {'Chirkov': C[0], 'Wu': C[1], 'Hawkins': C[2], 'Pooled': 'k'}
@@ -112,5 +112,5 @@ for yi, (k, lab, ds) in zip(yy, order):
     row = rr.loc[k]; ax.plot([row.ci95_lo, row.ci95_hi], [yi, yi], color=DS[ds], lw=1.2)
     ax.plot(row.delta_r, yi, 'D' if ds == 'Pooled' else 'o', color=DS[ds], ms=4)
 ax.axhline(1.5, color='0.8', lw=0.5); ax.axvline(0, color='k', lw=0.5)
-ax.set_yticks(yy); ax.set_yticklabels([o[1] for o in order], fontsize=7); ax.set_xlabel('$\\Delta r$ from within-group heterogeneity (95\\% CI)'); ax.set_xlim(-0.25, 0.45)
+ax.set_yticks(yy); ax.set_yticklabels([o[1] for o in order], fontsize=8); ax.set_xlabel('$\\Delta r$ from within-group heterogeneity (95\\% CI)'); ax.set_xlim(-0.25, 0.45)
 PF = R / 'paper_figures'; fig.savefig(PF / 'fig5_composition_pooled.pdf'); fig.savefig(PF / 'fig5_composition_pooled.png', dpi=220, transparent=False, facecolor='white'); plt.close(fig)

@@ -1,0 +1,6 @@
+Fig1	5.26 x 3.66 in	3154 x 2194 px @600 dpi	0.6 MB	OK
+Fig2	3.65 x 4.19 in	2193 x 2516 px @600 dpi	0.5 MB	OK
+Fig3	7.37 x 5.60 in	4423 x 3363 px @600 dpi	0.8 MB	OK
+Fig4	3.40 x 2.70 in	2039 x 1622 px @600 dpi	0.2 MB	OK
+Fig5	6.81 x 2.49 in	4086 x 1493 px @600 dpi	0.5 MB	OK
+Fig6	3.76 x 3.11 in	2256 x 1869 px @600 dpi	0.2 MB	OK
