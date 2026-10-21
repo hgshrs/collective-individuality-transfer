@@ -37,20 +37,21 @@ rel_rows = [  # (class, dataset, label, r)
 ]
 rel = pd.DataFrame(rel_rows, columns=['cls', 'ds', 'label', 'r'])
 classes = ['Private processing', 'Social attraction', 'Selective social learning', 'Being attended to']
-fig, ax = plt.subplots(figsize=(3.4, 2.6))
+fig, ax = plt.subplots(figsize=(3.4, 3.5))
 y = 0; yt = []; ytl = []; sep = []
 for cls in classes:
     sub = rel[rel.cls == cls].sort_values('r', ascending=True)
     y0 = y
     for _, r in sub.iterrows():
-        ax.plot([0, r.r], [y, y], color=DS[r.ds], lw=0.8, alpha=0.5); ax.plot(r.r, y, 'o', color=DS[r.ds], ms=4); y += 1
+        ax.plot([0, r.r], [y, y], color=DS[r.ds], lw=0.8, alpha=0.5); ax.plot(r.r, y, 'o', color=DS[r.ds], ms=4)
+        ax.text(r.r + 0.02, y, r.label, va='center', ha='left', fontsize=5.5, color='0.25'); y += 1
     yt.append((y0 + y - 1) / 2); ytl.append(cls.replace(' ', '\n') if cls != 'Being attended to' else 'Being\nattended to'); sep.append(y - 0.5); y += 0.8
 ax.set_yticks(yt); ax.set_yticklabels(ytl, fontsize=7)
 for s in sep[:-1]: ax.axhline(s + 0.4, color='0.8', lw=0.5)
-ax.set_xlim(0, 0.9); ax.set_xlabel('Split-half reliability $r$')
+ax.set_xlim(0, 1.25); ax.set_xticks([0, 0.2, 0.4, 0.6, 0.8, 1.0]); ax.set_xlabel('Split-half reliability $r$')
 ax.invert_yaxis()
 save_legend([Line2D([], [], marker='o', color=DS[d], ls='none', ms=4, label=l) for d, l in [('Chirkov', 'Chirkov et al. (3-D tracking)'), ('Wu', 'Wu et al. (Minecraft foraging)'), ('Hawkins', 'Hawkins et al. (2-D hidden spotlight)')]], 'fig1_legend', 'Legend for fig1_reliability and fig5_composition: dataset colours (tab10 C0 Chirkov, C1 Wu, C2 Hawkins)', ncol=1)
-save(fig, 'fig1_reliability', 'Split-half reliability (first vs second half of the session) of individual parameters, grouped by trait class, for the three datasets (colour = dataset). Private processing 0.60-0.83; social attraction 0.17-0.61; selective (payoff-dependent) social learning 0.09-0.55 but <= 0.27 for the Chirkov quality interactions and the Hawkins selectivity measures; being attended to 0.22-0.24. Sources: results/phase0/split_half_reliability.csv, results/wu2025/{choice_reliability,ind_reliability}.csv, results/hawkins2023/{reliability,teacher_reliability}.csv.')
+save(fig, 'fig1_reliability', 'Split-half reliability (first vs second half of the session) of individual parameters, grouped by trait class, for the three datasets (colour = dataset; each point is one parameter, named beside it). Private processing 0.60-0.83; social attraction 0.17-0.61; selective (payoff-dependent) social learning 0.09-0.55 but <= 0.27 for the Chirkov quality interactions and the Hawkins selectivity measures; being attended to 0.22-0.24. Sources: results/phase0/split_half_reliability.csv, results/wu2025/{choice_reliability,ind_reliability}.csv, results/hawkins2023/{reliability,teacher_reliability}.csv.')
 
 # ---------------- Fig 2: transfer (z -> targets) per dataset ----------------
 def transfer_panel(rows, name, caption, xlim=(-0.3, 0.9)):
