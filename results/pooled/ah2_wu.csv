@@ -1,0 +1,10 @@
+dataset,model,target,term,slope,se,p,n_pairs,n_k,llf
+Wu (solo PCA-4 z -> group choice weights),z distance only,mean over coefficients,dz_s,0.266597340997357,0.010837729765704747,1.2946154223827441e-133,1920,128,-1145.0679425398457
+Wu (solo PCA-4 z -> group choice weights),summary-statistic distance only,mean over coefficients,ds_s,0.26414224822369603,0.011264994897073126,1.3836239141664757e-121,1920,128,-1165.9832791229956
+Wu (solo PCA-4 z -> group choice weights),both,mean over coefficients,dz_s,0.24547039426101272,0.03757087748225595,6.423801469861897e-11,1920,128,-1144.8955108859554
+Wu (solo PCA-4 z -> group choice weights),both,mean over coefficients,ds_s,0.02266803700516028,0.03859822646183185,0.5570144433726416,1920,128,-1144.8955108859554
+Wu (solo PCA-4 z -> group choice weights),z distance only,Locality,dz_s,0.49896755133715276,0.05068572816225219,7.251344621849784e-23,1920,128,-4041.1980957250826
+Wu (solo PCA-4 z -> group choice weights),z distance only,BlockVisibility,dz_s,0.5677759236313753,0.051644103658694575,4.083586109984698e-28,1920,128,-4078.195525763974
+Wu (solo PCA-4 z -> group choice weights),z distance only,RewardPrediction,dz_s,0.07036583075591236,0.03929382998067239,0.07333176858303064,1920,128,-3580.855695716723
+Wu (solo PCA-4 z -> group choice weights),z distance only,SuccessfulProximity,dz_s,-0.012238713714794947,0.026938413375703258,0.6495970871645724,1920,128,-2907.6316095495085
+Wu (solo PCA-4 z -> group choice weights),z distance only,UnsuccessfulProximity,dz_s,0.04124401236799091,0.029685283307434304,0.1647185243683852,1920,128,-3083.4013428593325

@@ -1,0 +1,20 @@
+dataset,model,target,term,slope,se,p,n_pairs,n_k,llf
+Hawkins Exp 1 (first-half search z -> second-half targets),z distance only,mean over coefficients,dz_s,0.20766952374355416,0.0018282074859549257,0.0,32206,555,-5905.096488861105
+Hawkins Exp 1 (first-half search z -> second-half targets),summary-statistic distance only,mean over coefficients,ds_s,0.2054856126467305,0.001875537300342126,0.0,32206,555,-6228.009911513218
+Hawkins Exp 1 (first-half search z -> second-half targets),both,mean over coefficients,dz_s,0.21526089300583606,0.008421586233547924,4.184793641172026e-144,32206,555,-5904.670123771153
+Hawkins Exp 1 (first-half search z -> second-half targets),both,mean over coefficients,ds_s,-0.007897269295094928,0.008552019060622376,0.3557783923425327,32206,555,-5904.670123771153
+Hawkins Exp 1 (first-half search z -> second-half targets),z distance only,frac_stop_inspot,dz_s,0.029859135328368105,0.007053355395844187,2.3026288278143967e-05,32206,555,-49208.511925203056
+Hawkins Exp 1 (first-half search z -> second-half targets),z distance only,stop_latency,dz_s,0.07680858129204189,0.007626173484482355,7.368825156820008e-24,32206,555,-51676.777832608
+Hawkins Exp 1 (first-half search z -> second-half targets),z distance only,n_exit,dz_s,0.7127559871722866,0.012079856278240353,0.0,32206,555,-66355.65165021308
+Hawkins Exp 1 (first-half search z -> second-half targets),z distance only,n_enter,dz_s,0.72157203084341,0.011966350330095047,0.0,32206,555,-66050.83246928346
+Hawkins Exp 1 (first-half search z -> second-half targets),z distance only,out_face,dz_s,0.019464058166669587,0.008298064415478298,0.018995755644371247,32206,555,-54505.63150516583
+Hawkins Exp 1 (first-half search z -> second-half targets),z distance only,out_face_stop,dz_s,0.04310880217727097,0.0064248604229534085,1.9504238095385012e-11,32206,555,-46392.63943423203
+Hawkins Exp 1 (first-half search z -> second-half targets),z distance only,out_face_mov,dz_s,0.03542124967009387,0.007812008901792034,5.782085658876793e-06,32206,555,-52593.401412326784
+Hawkins Exp 1 (first-half search z -> second-half targets),z distance only,face_select,dz_s,-0.0004703653610469826,0.004150901396323733,0.9097796854769722,32206,555,-32647.38912333062
+Hawkins Exp 1 (first-half search z -> second-half targets),z distance only,in_face,dz_s,0.091589809130803,0.008289270597495903,2.2117689024373433e-28,32206,555,-54467.55144902732
+Hawkins Exp 1 (first-half search z -> second-half targets),z distance only,in_face_n,dz_s,0.11828154648351398,0.009068058844292364,6.897365640555139e-39,32206,555,-57332.292135796684
+Hawkins Exp 1 (first-half search z -> second-half targets),z distance only,approach,dz_s,0.5192784703601392,0.011680106585826995,0.0,32206,555,-65280.2663192974
+Hawkins Exp 1 (first-half search z -> second-half targets),z distance only,nn_dist,dz_s,0.3074259867664818,0.0107893512324424,1.4115920283736663e-178,32206,555,-62773.0806165158
+Hawkins Exp 1 (first-half search z -> second-half targets),z distance only,cen_dist,dz_s,0.2188512626357444,0.010186073949044078,2.134951522515916e-102,32206,555,-60948.24751732161
+Hawkins Exp 1 (first-half search z -> second-half targets),z distance only,frac_near50,dz_s,0.31988382007852373,0.010333378368777447,2.0859593698476447e-210,32206,555,-61391.52699659098
+Hawkins Exp 1 (first-half search z -> second-half targets),z distance only,score,dz_s,0.38957333433894453,0.010798156183769511,5.063084786884525e-285,32206,555,-62771.65049385227
