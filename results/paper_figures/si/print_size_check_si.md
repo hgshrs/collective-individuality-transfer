@@ -38,10 +38,10 @@ All SI panels use the scripts/80 rcParams (ticks/legend/annotations 8 pt, axis l
 | si/s5_b_pcr.pdf | 164.695 x 163.208 pts | 8.0 | 8.0 | yes |
 | si/s5_legend.pdf | 366.773 x 29.2646 pts | 8.0 | 8.0 | yes |
 
-Assembled figures (paper/figures/SIZES.txt; PLOS limits: width 2.63-7.5 in, height <= 8.75 in):
+Assembled figures (paper/figures/SIZES.txt; PLOS limits: width 2.63-7.5 in, height <= 8.75 in; numbering of 2026-10-23: S3 environment validation, S4 Wu mobility ABM, S5 social rules):
 
 - S1_Fig | 7.34 x 6.66 in | 4406 x 3995 px @600 dpi | 1.1 MB | OK
 - S2_Fig | 7.42 x 6.65 in | 4454 x 3993 px @600 dpi | 1.1 MB | OK
-- S3_Fig | 7.18 x 4.55 in | 4310 x 2729 px @600 dpi | 0.6 MB | OK
-- S4_Fig | 4.91 x 6.36 in | 2944 x 3816 px @600 dpi | 0.9 MB | OK
-- S5_Fig | 5.15 x 3.01 in | 3090 x 1805 px @600 dpi | 0.3 MB | OK
+- S3_Fig | 5.15 x 3.01 in | 3090 x 1805 px @600 dpi | 0.3 MB | OK
+- S4_Fig | 7.18 x 4.55 in | 4310 x 2729 px @600 dpi | 0.6 MB | OK
+- S5_Fig | 4.91 x 6.36 in | 2944 x 3816 px @600 dpi | 0.9 MB | OK

@@ -31,16 +31,16 @@ FIGS = {
     'Fig4': [[(None, 'fig3_roles_decomposition.pdf')]],
     'Fig5': [[('A', 'fig4a_group_chirkov.pdf'), ('B', 'fig4b_group_wu.pdf'), ('C', 'fig4c_group_hawkins.pdf')]],
     'Fig6': [[(None, 'fig5_composition_pooled.pdf')], [(None, 'fig1_legend.pdf')]],
-    # supporting information (panels from scripts/89 in results/paper_figures/si)
+    # supporting information (panels from scripts/89 in results/paper_figures/si). Numbering since 2026-10-23: S3 = environment validation (s5_*), S4 = Wu mobility ABM (s3_*), S5 = social rules (s4_*); panel file prefixes keep their original numbers
     'S1_Fig': [[('A', 'si/s1_a_score.pdf'), ('B', 'si/s1_b_tracking_time.pdf'), ('C', 'si/s1_c_pcr.pdf'), ('D', 'si/s1_d_med_dist.pdf')],
                [('E', 'si/s1_e_in_deg.pdf'), ('F', 'si/s1_f_out_deg.pdf'), ('G', 'si/s1_g_in_out_corr.pdf'), ('H', 'si/s1_h_disc_gain.pdf')],
                [('I', 'si/s1_i_controls.pdf')], [(None, 'si/s1_legend.pdf')]],
     'S2_Fig': [[('A', 'si/s2_a_score.pdf'), ('B', 'si/s2_b_tracking_time.pdf'), ('C', 'si/s2_c_pcr.pdf'), ('D', 'si/s2_d_med_dist.pdf')],
                [('E', 'si/s2_e_in_deg.pdf'), ('F', 'si/s2_f_out_deg.pdf'), ('G', 'si/s2_g_in_out_corr.pdf'), ('H', 'si/s2_h_disc_gain.pdf')],
                [('I', 'si/s2_i_controls.pdf')], [(None, 'si/s2_legend.pdf')]],
-    'S3_Fig': [[('A', 'si/s3_a_no_mobility.pdf'), ('B', 'si/s3_b_mobility.pdf'), ('C', 'si/s3_c_variants.pdf')], [('D', 'si/s3_d_calibration.pdf')]],
-    'S4_Fig': [[('A', 'si/s4_a_heatmap.pdf'), ('', 'si/s4_colorbar.pdf')], [('B', [['si/s4_b1_disc_gain.pdf', 'si/s4_b2_in_out_corr.pdf'], ['si/s4_b3_in_deg.pdf', 'si/s4_b4_tracking_time.pdf']])]],
-    'S5_Fig': [[('A', 'si/s5_a_tracking_time.pdf'), ('B', 'si/s5_b_pcr.pdf')], [(None, 'si/s5_legend.pdf')]],
+    'S4_Fig': [[('A', 'si/s3_a_no_mobility.pdf'), ('B', 'si/s3_b_mobility.pdf'), ('C', 'si/s3_c_variants.pdf')], [('D', 'si/s3_d_calibration.pdf')]],
+    'S5_Fig': [[('A', 'si/s4_a_heatmap.pdf'), ('', 'si/s4_colorbar.pdf')], [('B', [['si/s4_b1_disc_gain.pdf', 'si/s4_b2_in_out_corr.pdf'], ['si/s4_b3_in_deg.pdf', 'si/s4_b4_tracking_time.pdf']])]],
+    'S3_Fig': [[('A', 'si/s5_a_tracking_time.pdf'), ('B', 'si/s5_b_pcr.pdf')], [(None, 'si/s5_legend.pdf')]],
 }
 import sys
 ONLY = sys.argv[1:]  # e.g. `assemble.py S1_Fig S2_Fig` builds only those (leaves the other files untouched)
