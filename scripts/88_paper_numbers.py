@@ -42,7 +42,19 @@ tbl(b, '2a. Chirkov: search-phase -> tracking-phase transfer, out-of-fold r (10 
     'results/phase1/baselines_ridge_eb.csv')
 p2 = pd.read_csv(R / 'phase2/planB_r.csv'); d2 = pd.read_csv(R / 'phase2/planB_delta.csv')
 tbl(p2[p2.model.isin(['score3_only', 'z_pca4', 'z_pca4+score3'])], '2b. Chirkov: first-3-min movement z -> later visibility roles (out-of-fold r, n = 477)', 'results/phase2/planB_r.csv')
-tbl(d2[(d2.model == 'z_pca4') & (d2.baseline == 'score3_only') & d2.target.isin(['in_deg', 'out_deg', 'in_minus_out'])], '2c. Chirkov: Delta r of z over the first-3-min score baseline (group-cluster bootstrap)', 'results/phase2/planB_delta.csv')
+tbl(d2[(d2.model == 'z_pca4') & (d2.baseline == 'score3_only') & d2.target.isin(['in_deg', 'out_deg', 'in_minus_out'])], '2c. Chirkov: Delta r of z over the first-3-min score baseline -- PARTICIPANT bootstrap (2,000; collective_id.phase2.paired_delta) and squared-error mixed model with group intercept', 'results/phase2/planB_delta.csv')
+# 2c-bis: the pre-registered-verdict test (decision 2026-10-20, questions.md): Delta r tested with a GROUP-cluster bootstrap.
+cb = pd.read_csv(R / 'phase2/planB_cluster_bootstrap.csv')
+tbl(cb[cb.model == 'z_pca4'], '2c-bis. Chirkov: the same Delta r with a GROUP-CLUSTER bootstrap (3,000 resamples of whole groups) -- this is the test adopted for the B-H1 verdict (questions.md 2026-10-20; phase2_report §5): in-degree p 0.007, out-degree p 0.14. Stored table from commit 9b3494d (2026-10-20); the computation was done ad hoc then, so it is re-run below for provenance', 'results/phase2/planB_cluster_bootstrap.csv')
+oof = pd.read_csv(R / 'phase2/planB_oof_predictions.csv', index_col=0); tg = pd.read_csv(P / 'data/processed/phase2_targets.csv').set_index('participant').loc[oof.index]
+rng = np.random.default_rng(0); ug = tg.group.unique(); gidx = {g: np.where(tg.group.to_numpy() == g)[0] for g in ug}; rows = []
+for t in ['in_deg', 'out_deg', 'in_minus_out']:
+    y = tg[t].to_numpy(float); pm = oof[f'{t}|z_pca4'].to_numpy(float); pb = oof[f'{t}|score3_only'].to_numpy(float)
+    obs_d = np.corrcoef(pm, y)[0, 1] - np.corrcoef(pb, y)[0, 1]; bs = []
+    for _ in range(3000):
+        i = np.concatenate([gidx[g] for g in rng.choice(ug, len(ug), replace=True)]); bs.append(np.corrcoef(pm[i], y[i])[0, 1] - np.corrcoef(pb[i], y[i])[0, 1])
+    bs = np.array(bs); rows.append(dict(target=t, model='z_pca4 vs score3_only', delta_r=obs_d, ci_lo=np.quantile(bs, .025), ci_hi=np.quantile(bs, .975), p_two_sided=2 * min((bs <= 0).mean(), (bs >= 0).mean()), n_groups=len(ug), n=len(y)))
+tbl(pd.DataFrame(rows), '2c-ter. Re-computation of 2c-bis here (group-cluster bootstrap, 3,000 resamples, seed 0, from the stored out-of-fold predictions). Differences from 2c-bis are Monte-Carlo only. Recommended citation for hypothesis (iii): Delta r from 2c, CI and p from the cluster bootstrap (2c-bis/2c-ter)', 'results/phase2/planB_oof_predictions.csv + data/processed/phase2_targets.csv')
 t = pd.read_csv(R / 'wu2025/transfer_r.csv'); keep = ['choice_Locality', 'choice_BlockVisibility', 'choice_RewardPrediction', 'group_out_vis', 'choice_SuccessfulProximity', 'choice_UnsuccessfulProximity', 'group_in_vis', 'group_n_rewards', 'group_nn_dist_mean', 'group_n_splash_seen']
 tbl(t[t.target.isin(keep)][['target', 'solo_z4', 'solo_stats_ridge', 'solo_reward', 'noise_ceiling']], '2d. Wu: solo-round z -> group-round targets, out-of-fold r (8 folds of 4 sessions, n = 128); ceiling = 1b', 'results/wu2025/transfer_r.csv')
 tr = pd.read_csv(R / 'hawkins2023/transfer_r.csv'); keep = ['beh_stop_latency', 'beh_frac_stop_inspot', 'beh_approach', 'beh_nn_dist', 'beh_out_face_stop', 'beh_face_select', 'beh_in_face', 'beh_score', 'teacher_b_stop', 'teacher_b_cen']
@@ -83,6 +95,32 @@ tbl(me[me.observed == 'total_reward'][['variant', 'r', 'ci_lo', 'ci_hi', 'r_rand
 tbl(md[md.observed == 'total_reward'], '4i. Wu: Delta r contrasts for the mobility ABM', 'results/wu2025/sim_mobility_delta.csv')
 tbl(mc, '4j. Wu: absolute group reward per env, simulated vs observed', 'results/wu2025/sim_mobility_calibration.csv', nd=1)
 hp = pd.read_csv(R / 'hawkins2023/group_pred.csv'); tbl(hp, '4k. Hawkins: second-half group score from members\' first-half measurements (LOGO ridge; game bootstrap)', 'results/hawkins2023/group_pred.csv')
+
+# ---------------- 4l. mobility vs individual performance (Discussion support) ----------------
+import sys; sys.path.insert(0, str(P / 'src'))
+from collective_id.data import load_features
+rows = []
+wf = pd.read_parquet(P / 'data/processed/wu2025/round_features.parquet'); so = wf[wf.type == 'solo'].groupby('pid')[['path_len', 'frac_moving', 'n_rewards']].mean()
+rows.append(dict(dataset='Wu', x='solo path length (participant mean over 8 solo rounds)', y='solo reward count (mean)', r=so.path_len.corr(so.n_rewards), n=len(so)))
+rows.append(dict(dataset='Wu', x='solo fraction of time moving', y='solo reward count (mean)', r=so.frac_moving.corr(so.n_rewards), n=len(so)))
+F = pd.read_parquet(P / 'data/processed/hawkins2023/features.parquet'); G = pd.read_parquet(P / 'data/processed/hawkins2023/games.parquet'); F = F.merge(G[['experiment', 'gameid', 'field']], on=['experiment', 'gameid'])
+def cell_resid(df, cols):
+    out = df.copy(); key = out['experiment'].astype(str) + '_' + out['n_players'].astype(str) + '_' + out['field'].astype(str)
+    for c in cols: out[c] = out[c] - out.groupby(key)[c].transform('mean'); out[c] = out[c] / out.groupby('experiment')[c].transform('std')
+    return out
+S1 = F[(F.half == 'first') & (F.state == 'search')]; A1 = F[(F.half == 'first') & (F.state == 'all')]
+for e in [1, 3]:
+    sres = cell_resid(S1[S1.experiment == e].reset_index(drop=True), ['path_len']).set_index('pid'); ares = cell_resid(A1[A1.experiment == e].reset_index(drop=True), ['score', 'path_len']).set_index('pid'); j = sres.index.intersection(ares.index)
+    rows.append(dict(dataset=f'Hawkins Exp {e}', x='first-half path length in the search state (residualised within experiment x group size x field)', y='first-half individual score (residualised)', r=sres.loc[j, 'path_len'].corr(ares.loc[j, 'score']), n=len(j)))
+    rows.append(dict(dataset=f'Hawkins Exp {e}', x='first-half path length, all states (residualised)', y='first-half individual score (residualised)', r=ares.loc[j, 'path_len'].corr(ares.loc[j, 'score']), n=len(j)))
+pp = pd.read_csv(R / 'phase3/policy_params_all.csv').set_index('participant'); dd = load_features(); mt = dd.groupby('participant').agg(cond=('cond', 'first'), speed=('speed', 'first'), score=('final_score', 'first'))
+x = pp.join(mt[['score']]); x['score_z'] = x.groupby(['cond', 'speed']).score.transform(lambda v: (v - v.mean()) / v.std())
+for lab, m in [('Chirkov, alone (condition A)', x.cond == 'A'), ('Chirkov, group conditions (NP/VP/FP)', x.cond != 'A')]:
+    q = x[m]
+    rows.append(dict(dataset=lab, x='fitted persistence = P(no rotation in a second)', y='final score (z within condition x speed)', r=q.persistence.corr(q.score_z), n=len(q)))
+    rows.append(dict(dataset=lab, x='fitted tracking-rotation intercept I (deg/s)', y='final score (z within condition x speed)', r=q.I.corr(q.score_z), n=len(q)))
+    rows.append(dict(dataset=lab, x='fitted search max rotation r_max (deg/s)', y='final score (z within condition x speed)', r=q.r_max.corr(q.score_z), n=len(q)))
+tbl(pd.DataFrame(rows), '4l. Mobility vs individual performance (Pearson r, no CI; Discussion support). NOTE the direction in Chirkov: persistence is the probability of NOT rotating, so the negative r means that participants who rotate (re-orient) more score higher; "mobility" in Chirkov is rotation activity, whereas in Wu and Hawkins it is translational path length (agents always move forward in the Chirkov task)', 'data/processed/wu2025/round_features.parquet; data/processed/hawkins2023/features.parquet; results/phase3/policy_params_all.csv + data/processed/features_1hz.parquet (final_score)')
 
 # ---------------- 5. composition ----------------
 cp = pd.read_csv(R / 'pooled/composition_pooled.csv'); tbl(cp, '5a. Composition effect per dataset and pooled (stratified cluster bootstrap, 5,000; TOST bound = max |90 % CI|)', 'results/pooled/composition_pooled.csv')

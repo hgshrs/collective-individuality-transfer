@@ -101,7 +101,7 @@ import matplotlib.transforms as mtr
 tf = mtr.blended_transform_factory(ax.transData, ax.transAxes)
 for i, ds in enumerate(['Chirkov et al.', 'Wu et al.', 'Hawkins et al.']): ax.text(i * 2.6 + 0.5, -0.36, ds, ha='center', va='top', fontsize=8, transform=tf)
 ax.set_ylabel('Increment in marginal $R^2$'); ax.set_ylim(0, 0.2); ax.legend(frameon=False, loc='upper right')
-save(fig, 'fig3_roles_decomposition', 'Increment in marginal R2 of visibility roles (being attended to = in-degree; attending to others = out-degree) when adding, in order, own z, the other members\' mean z and the within-group SD of z to a mixed model with group random intercept and a performance control. Group SD adds <= 0.012 everywhere (LRT p 0.22-0.96, except Hawkins attended p 0.048). Sources: results/phase2/planB_decomposition.csv (control = score_3min), results/wu2025/decomposition.csv, results/hawkins2023/decomposition.csv.')
+save(fig, 'fig3_roles_decomposition', 'Increment in marginal R2 of visibility roles (being attended to = in-degree; attending to others = out-degree) when adding, in order, own z, the other members\' mean z and the within-group SD of z to a mixed model with group random intercept and a performance control. Group SD adds <= 0.012 everywhere (LRT p 0.22-0.95, except Hawkins attended p 0.048). Sources: results/phase2/planB_decomposition.csv (control = score_3min), results/wu2025/decomposition.csv, results/hawkins2023/decomposition.csv.')
 
 # ---------------- Fig 4: group performance prediction scatters ----------------
 def zcell(s, key): return s.groupby(key).transform(lambda v: (v - v.mean()) / v.std())
