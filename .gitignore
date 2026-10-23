@@ -1,16 +1,24 @@
-data/raw/
-data/processed/*.parquet
-data/processed/*.nc
-data/processed/*.npz
+# Participant-level and third-party material is not versioned here (see README.md, "What is not included")
+data/
+external/
 runs/
 logs/
+refs/
+
+# Python / uv
 .venv/
 __pycache__/
 *.pyc
+*.egg-info/
+
+# large or derived binary outputs (re-created by the scripts; archived on Zenodo)
+*.parquet
+*.nc
+*.npz
+*.zip
+*.tif
+paper/figures/build/
+
+# OS / editor
 ._*
 .DS_Store
-external/
-*.zip
-data/processed/wu2025/*.parquet
-data/processed/hawkins2023/*.parquet
-paper/figures/build/
