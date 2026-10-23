@@ -14,7 +14,7 @@ import json, sys
 import numpy as np, pandas as pd, torch
 from pathlib import Path
 torch.set_default_dtype(torch.float64)
-P = Path('/home/higashi/Research/20260924_collective'); R = P / 'results/wu2025'; D = P / 'data/processed/wu2025'
+P = Path(__file__).resolve().parents[1]; R = P / 'results/wu2025'; D = P / 'data/processed/wu2025'
 MF = P / 'external/wu2025/modeling/data/modelFeatures'
 pop = json.load(open(R / 'stan_population.json'))
 rounds = pd.read_parquet(D / 'rounds.parquet')

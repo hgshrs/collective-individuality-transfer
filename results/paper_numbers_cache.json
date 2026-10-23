@@ -1,0 +1,53 @@
+{
+ "0_samples": [
+  "## 0. Samples",
+  "Sources: results/phase3/policy_params_all.csv, observed_group_metrics.csv; data/processed/wu2025/round_features.parquet; data/processed/hawkins2023/games.parquet; results/hawkins2023/{z_first_half,group_table}.csv",
+  "",
+  "- Chirkov et al. 2026: 621 participants with fitted policies (144 alone, 477 in groups); 103 analysed groups (65 of 5, 38 of 4); conditions NP/VP/FP x slow/fast; 15 min at 10 Hz (1 Hz features).",
+  "- Wu et al. 2025: 128 participants, 32 sessions of 4; 8 solo + 8 group rounds of 120 s per participant (random/smooth environments); 20 Hz.",
+  "- Hawkins et al. 2023: Exp 1 682 participants in 294 games, Exp 3 451 participants in 223 games (games with usable first/second halves); group level: 281 games with >= 2 players, 169 with >= 3.",
+  ""
+ ],
+ "2c_ter_cluster_bootstrap": [
+  "## 2c-ter. Re-computation of 2c-bis here (group-cluster bootstrap, 3,000 resamples, seed 0, from the stored out-of-fold predictions). Differences from 2c-bis are Monte-Carlo only. Recommended citation for hypothesis (iii): Delta r from 2c, CI and p from the cluster bootstrap (2c-bis/2c-ter)",
+  "Source: `results/phase2/planB_oof_predictions.csv + data/processed/phase2_targets.csv`",
+  "",
+  "| target | model | delta_r | ci_lo | ci_hi | p_two_sided | n_groups | n |",
+  "|---|---|---|---|---|---|---|---|",
+  "| in_deg | z_pca4 vs score3_only | 0.114 | 0.026 | 0.204 | 0.007 | 103 | 477 |",
+  "| out_deg | z_pca4 vs score3_only | 0.079 | -0.02 | 0.172 | 0.121 | 103 | 477 |",
+  "| in_minus_out | z_pca4 vs score3_only | 0.117 | 0.006 | 0.222 | 0.039 | 103 | 477 |",
+  ""
+ ],
+ "4c_bis_mps_v1_null": [
+  "## 4c-bis. Chirkov D-1: null r of the first mean-preserving shuffle, which matched the five per-agent policy parameters (I, S, k, x0, r_max) but NOT persistence (the superseded version; the final ctrl4b_mps in 4c also matches persistence). The higher null r here (vs the final version) shows that persistence carries much of the prediction",
+  "Source: `results/phase3/sim_runs_mps_v1_no_persistence_match.parquet (2,000 re-draws)`",
+  "",
+  "| metric | r_main | r_null_mean | r_null_q95 | p_perm | n_groups | n_draws |",
+  "|---|---|---|---|---|---|---|",
+  "| score | 0.554 | 0.376 | 0.482 | 0.004 | 103 | 50 |",
+  "| tracking_time | 0.538 | 0.35 | 0.462 | 0.005 | 103 | 50 |",
+  "| pcr | 0.452 | 0.35 | 0.46 | 0.066 | 103 | 50 |",
+  ""
+ ],
+ "4l_mobility_vs_performance": [
+  "## 4l. Mobility vs individual performance (Pearson r, no CI; Discussion support). NOTE the direction in Chirkov: persistence is the probability of NOT rotating, so the negative r means that participants who rotate (re-orient) more score higher; \"mobility\" in Chirkov is rotation activity, whereas in Wu and Hawkins it is translational path length (agents always move forward in the Chirkov task)",
+  "Source: `data/processed/wu2025/round_features.parquet; data/processed/hawkins2023/features.parquet; results/phase3/policy_params_all.csv + data/processed/features_1hz.parquet (final_score)`",
+  "",
+  "| dataset | x | y | r | n |",
+  "|---|---|---|---|---|",
+  "| Wu | solo path length (participant mean over 8 solo rounds) | solo reward count (mean) | 0.244 | 128 |",
+  "| Wu | solo fraction of time moving | solo reward count (mean) | 0.291 | 128 |",
+  "| Hawkins Exp 1 | first-half path length in the search state (residualised within experiment x group size x field) | first-half individual score (residualised) | 0.354 | 682 |",
+  "| Hawkins Exp 1 | first-half path length, all states (residualised) | first-half individual score (residualised) | 0.191 | 682 |",
+  "| Hawkins Exp 3 | first-half path length in the search state (residualised within experiment x group size x field) | first-half individual score (residualised) | 0.273 | 444 |",
+  "| Hawkins Exp 3 | first-half path length, all states (residualised) | first-half individual score (residualised) | -0.131 | 444 |",
+  "| Chirkov, alone (condition A) | fitted persistence = P(no rotation in a second) | final score (z within condition x speed) | -0.554 | 144 |",
+  "| Chirkov, alone (condition A) | fitted tracking-rotation intercept I (deg/s) | final score (z within condition x speed) | 0.314 | 144 |",
+  "| Chirkov, alone (condition A) | fitted search max rotation r_max (deg/s) | final score (z within condition x speed) | 0.116 | 144 |",
+  "| Chirkov, group conditions (NP/VP/FP) | fitted persistence = P(no rotation in a second) | final score (z within condition x speed) | -0.438 | 477 |",
+  "| Chirkov, group conditions (NP/VP/FP) | fitted tracking-rotation intercept I (deg/s) | final score (z within condition x speed) | 0.096 | 477 |",
+  "| Chirkov, group conditions (NP/VP/FP) | fitted search max rotation r_max (deg/s) | final score (z within condition x speed) | 0.159 | 477 |",
+  ""
+ ]
+}

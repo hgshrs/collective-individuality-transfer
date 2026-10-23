@@ -19,7 +19,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.pipeline import make_pipeline
 import statsmodels.formula.api as smf
 warnings.filterwarnings('ignore')
-P = Path('/home/higashi/Research/20260924_collective'); D = P / 'data/processed/wu2025'; R = P / 'results/wu2025'
+P = Path(__file__).resolve().parents[1]; D = P / 'data/processed/wu2025'; R = P / 'results/wu2025'
 rng = np.random.default_rng(0)
 feats = pd.read_parquet(D / 'round_features.parquet')
 cw = pd.read_csv(R / 'choice_weights.csv')

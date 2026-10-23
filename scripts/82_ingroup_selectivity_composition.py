@@ -21,7 +21,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.pipeline import make_pipeline
 from scipy.stats import spearmanr
 warnings.filterwarnings('ignore')
-P = Path('/home/higashi/Research/20260924_collective'); R = P / 'results'; OUT = R / 'pooled'; OUT.mkdir(exist_ok=True)
+P = Path(__file__).resolve().parents[1]; R = P / 'results'; OUT = R / 'pooled'; OUT.mkdir(exist_ok=True)
 rng = np.random.default_rng(3)
 
 def oof(X, y, cl):

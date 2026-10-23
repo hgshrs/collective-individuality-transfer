@@ -1,7 +1,7 @@
 """Assemble reports/wu2025_replication.md (tables) from results/wu2025/*.csv. Narrative sections are appended by hand."""
 import json, numpy as np, pandas as pd
 from pathlib import Path
-P = Path('/home/higashi/Research/20260924_collective'); R = P / 'results/wu2025'
+P = Path(__file__).resolve().parents[1]; R = P / 'results/wu2025'
 L = []
 def h(s): L.append(f'\n{s}\n')
 def tab(df, floatfmt='.3f'): L.append(df.to_markdown(index=False, floatfmt=floatfmt)); L.append('')

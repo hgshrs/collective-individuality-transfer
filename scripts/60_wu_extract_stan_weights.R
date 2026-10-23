@@ -1,5 +1,5 @@
 # Extract per-participant posterior-mean varying effects (v_ID) from the paper's Stan fits (Wu et al. 2025)
-P <- "/home/higashi/Research/20260924_collective"
+.f <- sub("--file=", "", grep("--file=", commandArgs(), value = TRUE)); P <- if (length(.f)) normalizePath(file.path(dirname(.f[1]), "..")) else getwd()  # repository root
 ids <- readLines(file.path(P, "data/processed/wu2025/stan_id_order.txt"))
 loadRData <- function(f){ e <- new.env(); nm <- load(f, envir = e); get(nm[1], envir = e) }
 out <- list()

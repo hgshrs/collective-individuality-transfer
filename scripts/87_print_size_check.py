@@ -3,7 +3,7 @@
 in the PDF x min(1, intended / PDF width). Output: results/paper_figures/print_size_check.md"""
 import subprocess, re
 from pathlib import Path
-OUT = Path('/home/higashi/Research/20260924_collective/results/paper_figures')
+OUT = Path(__file__).resolve().parents[1] / 'results/paper_figures'
 minfont = {'fig0_concept': 8.0, 'fig1_legend': 8.0, 'fig1_reliability': 8.0, 'fig2a_transfer_chirkov': 8.0, 'fig2b_transfer_wu': 8.0, 'fig2c_transfer_hawkins': 8.0, 'fig2_legend': 8.0,
            'fig3_roles_decomposition': 8.0, 'fig4a_group_chirkov': 8.0, 'fig4b_group_wu': 8.0, 'fig4c_group_hawkins': 8.0, 'fig5_composition': 8.0, 'fig5_composition_pooled': 8.0}
 intended = {k: 244.8 for k in minfont}; intended.update({'fig4a_group_chirkov': 171.8, 'fig4b_group_wu': 171.8, 'fig4c_group_hawkins': 171.8})

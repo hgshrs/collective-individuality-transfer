@@ -19,7 +19,7 @@ from sklearn.linear_model import RidgeCV
 from sklearn.preprocessing import StandardScaler
 from sklearn.pipeline import make_pipeline
 warnings.filterwarnings('ignore')
-P = Path('/home/higashi/Research/20260924_collective'); R = P / 'results'; OUT = R / 'pooled'; OUT.mkdir(exist_ok=True)
+P = Path(__file__).resolve().parents[1]; R = P / 'results'; OUT = R / 'pooled'; OUT.mkdir(exist_ok=True)
 rng = np.random.default_rng(0)
 
 def z(s): return (s - s.mean()) / s.std(ddof=0)

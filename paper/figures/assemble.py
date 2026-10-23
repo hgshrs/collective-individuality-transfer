@@ -8,7 +8,7 @@ per figure in paper/figures/build/. Usage: uv run python paper/figures/assemble.
 import subprocess, shutil, re
 from pathlib import Path
 from PIL import Image
-P = Path('/home/higashi/Research/20260924_collective'); SRC = P / 'results/paper_figures'; OUT = P / 'paper/figures'; B = OUT / 'build'; B.mkdir(exist_ok=True)
+P = Path(__file__).resolve().parents[2]; SRC = P / 'results/paper_figures'; OUT = P / 'paper/figures'; B = OUT / 'build'; B.mkdir(exist_ok=True)
 Image.MAX_IMAGE_PIXELS = None
 LABEL = r'{\sffamily\bfseries\fontsize{12}{14}\selectfont %s}'
 

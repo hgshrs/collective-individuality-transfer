@@ -5,7 +5,7 @@ Output: results/paper_figures/fig0_concept.{pdf,png} (+ caption line appended to
 import matplotlib; matplotlib.use('Agg'); import matplotlib.pyplot as plt
 from matplotlib.patches import FancyBboxPatch, FancyArrowPatch
 from pathlib import Path
-OUT = Path('/home/higashi/Research/20260924_collective/results/paper_figures')
+OUT = Path(__file__).resolve().parents[1] / 'results/paper_figures'
 plt.rcParams.update({'text.usetex': True, 'font.family': 'sans-serif', 'font.sans-serif': ['Helvetica'],
                      'text.latex.preamble': r'\usepackage{helvet}\usepackage{sfmath}\renewcommand{\familydefault}{\sfdefault}',
                      'font.size': 8, 'savefig.transparent': True, 'savefig.bbox': 'tight', 'pdf.fonttype': 42})

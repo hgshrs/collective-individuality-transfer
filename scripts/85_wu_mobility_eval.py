@@ -6,7 +6,7 @@ sim_mobility_delta.csv, sim_mobility_calibration.csv
 """
 import numpy as np, pandas as pd
 from pathlib import Path
-P = Path('/home/higashi/Research/20260924_collective'); R = P / 'results/wu2025'
+P = Path(__file__).resolve().parents[1]; R = P / 'results/wu2025'
 rng = np.random.default_rng(5)
 gr = pd.read_csv(R / 'group_rounds.csv'); sim0 = pd.read_parquet(R / 'sim_runs.parquet'); sim1 = pd.read_parquet(R / 'sim_runs_mobility.parquet')
 obs = gr.groupby(['session', 'env'])[['total_reward', 'nn_dist_mean', 'reward_sd']].mean()

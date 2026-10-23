@@ -9,7 +9,7 @@ matplotlib.use('Agg'); import matplotlib.pyplot as plt
 from matplotlib.lines import Line2D
 from matplotlib.patches import Patch
 from pathlib import Path
-P = Path('/home/higashi/Research/20260924_collective'); R = P / 'results'; OUT = R / 'paper_figures' / 'si'; OUT.mkdir(exist_ok=True)
+P = Path(__file__).resolve().parents[1]; R = P / 'results'; OUT = R / 'paper_figures' / 'si'; OUT.mkdir(exist_ok=True)
 plt.rcParams.update({'text.usetex': True, 'font.family': 'sans-serif', 'font.sans-serif': ['Helvetica'],
                      'text.latex.preamble': r'\usepackage{helvet}\usepackage{sfmath}\renewcommand{\familydefault}{\sfdefault}',
                      'font.size': 8, 'axes.labelsize': 9, 'xtick.labelsize': 8, 'ytick.labelsize': 8, 'legend.fontsize': 8,

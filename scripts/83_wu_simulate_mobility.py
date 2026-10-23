@@ -17,7 +17,7 @@ import sys, json, argparse, copy, time
 import numpy as np, pandas as pd
 from pathlib import Path
 from multiprocessing import Pool
-P = Path('/home/higashi/Research/20260924_collective'); D = P / 'data/processed/wu2025'; R = P / 'results/wu2025'
+P = Path(__file__).resolve().parents[1]; D = P / 'data/processed/wu2025'; R = P / 'results/wu2025'
 sys.path.insert(0, str(P / 'external/wu2025/simulations')); sys.path.insert(0, str(P / 'scripts'))
 from task import State, AgentView
 from simulation import Simulation, SimulationResult

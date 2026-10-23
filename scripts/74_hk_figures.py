@@ -2,7 +2,7 @@
 import numpy as np, pandas as pd, matplotlib
 matplotlib.use('Agg'); import matplotlib.pyplot as plt
 from pathlib import Path
-P = Path('/home/higashi/Research/20260924_collective'); R = P / 'results/hawkins2023'
+P = Path(__file__).resolve().parents[1]; R = P / 'results/hawkins2023'
 tr = pd.read_csv(R / 'transfer_r.csv')
 fig, axes = plt.subplots(2, 1, figsize=(13, 9))
 for ax, e in zip(axes, [1, 3]):

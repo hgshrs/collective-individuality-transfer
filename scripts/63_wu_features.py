@@ -7,7 +7,7 @@ Output: data/processed/wu2025/round_features.parquet (one row per participant x 
 import numpy as np, pandas as pd
 from pathlib import Path
 
-P = Path('/home/higashi/Research/20260924_collective'); D = P / 'data/processed/wu2025'
+P = Path(__file__).resolve().parents[1]; D = P / 'data/processed/wu2025'
 players = pd.read_parquet(D / 'players.parquet')
 blocks = pd.read_parquet(D / 'blocks.parquet')
 evis = pd.read_parquet(D / 'evis.parquet')

@@ -15,7 +15,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.pipeline import make_pipeline
 from scipy import stats
 warnings.filterwarnings('ignore')
-P = Path('/home/higashi/Research/20260924_collective'); D = P / 'data/processed/wu2025'; R = P / 'results/wu2025'
+P = Path(__file__).resolve().parents[1]; D = P / 'data/processed/wu2025'; R = P / 'results/wu2025'
 rng = np.random.default_rng(1)
 feats = pd.read_parquet(D / 'round_features.parquet'); cw = pd.read_csv(R / 'choice_weights.csv')
 Z = pd.read_csv(R / 'z_solo_pca4.csv', index_col=0)

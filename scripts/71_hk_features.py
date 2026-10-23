@@ -11,7 +11,7 @@ Output: data/processed/hawkins2023/features.parquet (one row per participant x h
 """
 import numpy as np, pandas as pd
 from pathlib import Path
-P = Path('/home/higashi/Research/20260924_collective'); D = P / 'data/processed/hawkins2023'
+P = Path(__file__).resolve().parents[1]; D = P / 'data/processed/hawkins2023'
 t = pd.read_parquet(D / 'ticks.parquet'); games = pd.read_parquet(D / 'games.parquet')
 t = t.merge(games[['experiment', 'gameid', 'complete', 'n_players']], on=['experiment', 'gameid'])
 t = t[t.complete & ~t.dropped_first_half]

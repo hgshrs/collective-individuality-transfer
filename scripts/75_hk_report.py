@@ -1,7 +1,7 @@
 """Assemble reports/hawkins2023_replication_tables.md from results/hawkins2023/*.csv."""
 import pandas as pd
 from pathlib import Path
-P = Path('/home/higashi/Research/20260924_collective'); R = P / 'results/hawkins2023'; L = []
+P = Path(__file__).resolve().parents[1]; R = P / 'results/hawkins2023'; L = []
 def h(s): L.append(f'\n{s}\n')
 def tab(df, ff='.3f'): L.append(df.to_markdown(index=False, floatfmt=ff)); L.append('')
 h('# Hawkins et al. (2023) replication of the Collective-ID analyses — tables')

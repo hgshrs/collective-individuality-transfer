@@ -9,7 +9,7 @@ Outputs: data/processed/hawkins2023/{ticks,games,waiting}.parquet
 import glob, re
 import numpy as np, pandas as pd
 from pathlib import Path
-P = Path('/home/higashi/Research/20260924_collective'); H = P / 'external/hawkins2023/data'; OUT = P / 'data/processed/hawkins2023'
+P = Path(__file__).resolve().parents[1]; H = P / 'external/hawkins2023/data'; OUT = P / 'data/processed/hawkins2023'
 rows = []; games = []
 def load(files, exp):
     for f in files:

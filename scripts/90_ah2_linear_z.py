@@ -18,7 +18,7 @@ from sklearn.cross_decomposition import PLSRegression
 from sklearn.linear_model import RidgeCV
 from pathlib import Path
 warnings.filterwarnings('ignore')
-P = Path('/home/higashi/Research/20260924_collective'); R = P / 'results'
+P = Path(__file__).resolve().parents[1]; R = P / 'results'
 import sys; sys.path.insert(0, str(P / 'src'))
 from collective_id.paths import CONFIGS, PROCESSED
 from collective_id.data import load_features

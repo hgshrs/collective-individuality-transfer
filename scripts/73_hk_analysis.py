@@ -22,7 +22,7 @@ from sklearn.pipeline import make_pipeline
 import statsmodels.formula.api as smf
 from scipy.stats import chi2, spearmanr
 warnings.filterwarnings('ignore')
-P = Path('/home/higashi/Research/20260924_collective'); D = P / 'data/processed/hawkins2023'; R = P / 'results/hawkins2023'
+P = Path(__file__).resolve().parents[1]; D = P / 'data/processed/hawkins2023'; R = P / 'results/hawkins2023'
 rng = np.random.default_rng(0)
 F = pd.read_parquet(D / 'features.parquet'); games = pd.read_parquet(D / 'games.parquet'); W = pd.read_parquet(D / 'waiting_features.parquet')
 TW = pd.read_csv(R / 'teacher_weights.csv')

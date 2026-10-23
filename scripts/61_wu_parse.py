@@ -11,7 +11,7 @@ import json, re, sys
 from pathlib import Path
 import numpy as np, pandas as pd, polars as pl
 
-P = Path('/home/higashi/Research/20260924_collective')
+P = Path(__file__).resolve().parents[1]
 RAW = P / 'external/wu2025/analysis/data/2021batch'
 SESS = P / 'external/wu2025/experiment/run/sessions'
 OUT = P / 'data/processed/wu2025'; OUT.mkdir(parents=True, exist_ok=True)

@@ -1,4 +1,4 @@
-P <- "/home/higashi/Research/20260924_collective"
+.f <- sub("--file=", "", grep("--file=", commandArgs(), value = TRUE)); P <- if (length(.f)) normalizePath(file.path(dirname(.f[1]), "..")) else getwd()  # repository root
 loadRData <- function(f){ e <- new.env(); nm <- load(f, envir = e); get(nm[1], envir = e) }
 library(jsonlite)
 out <- list()

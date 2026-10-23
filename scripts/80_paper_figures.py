@@ -4,7 +4,7 @@ ticks/legend/annotations 8 pt. Panels are assembled into PLOS multi-panel figure
 import sys, numpy as np, pandas as pd, matplotlib
 matplotlib.use('Agg'); import matplotlib.pyplot as plt
 from pathlib import Path
-P = Path('/home/higashi/Research/20260924_collective'); OUT = Path(sys.argv[1]) if len(sys.argv) > 1 else P / 'results/paper_figures'; OUT.mkdir(exist_ok=True, parents=True)  # optional output dir (to regenerate selected files only)
+P = Path(__file__).resolve().parents[1]; OUT = Path(sys.argv[1]) if len(sys.argv) > 1 else P / 'results/paper_figures'; OUT.mkdir(exist_ok=True, parents=True)  # optional output dir (to regenerate selected files only)
 plt.rcParams.update({'text.usetex': True, 'font.family': 'sans-serif', 'font.sans-serif': ['Helvetica'],
                      'text.latex.preamble': r'\usepackage{helvet}\usepackage{sfmath}\renewcommand{\familydefault}{\sfdefault}',
                      'font.size': 8, 'axes.labelsize': 9, 'xtick.labelsize': 8, 'ytick.labelsize': 8, 'legend.fontsize': 8,  # PLOS Comput Biol: 8-12 pt (2026-10-21)

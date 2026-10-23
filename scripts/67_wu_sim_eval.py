@@ -7,7 +7,7 @@ membership-shuffle null for r. Output: results/wu2025/sim_eval.csv, sim_eval_del
 """
 import numpy as np, pandas as pd
 from pathlib import Path
-P = Path('/home/higashi/Research/20260924_collective'); R = P / 'results/wu2025'
+P = Path(__file__).resolve().parents[1]; R = P / 'results/wu2025'
 rng = np.random.default_rng(2)
 gr = pd.read_csv(R / 'group_rounds.csv'); sim = pd.read_parquet(R / 'sim_runs.parquet')
 obs = gr.groupby(['session', 'env'])[['total_reward', 'nn_dist_mean', 'out_vis_mean', 'reward_sd']].mean()

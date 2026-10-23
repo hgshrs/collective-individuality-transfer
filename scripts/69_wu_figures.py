@@ -2,7 +2,7 @@
 import numpy as np, pandas as pd, matplotlib
 matplotlib.use('Agg'); import matplotlib.pyplot as plt
 from pathlib import Path
-P = Path('/home/higashi/Research/20260924_collective'); R = P / 'results/wu2025'
+P = Path(__file__).resolve().parents[1]; R = P / 'results/wu2025'
 # 1. transfer r vs noise ceiling
 tr = pd.read_csv(R / 'transfer_r.csv', index_col=0)
 sel = [t for t in tr.index if not t.startswith('stan_')]
