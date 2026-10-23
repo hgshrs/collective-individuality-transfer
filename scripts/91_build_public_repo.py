@@ -173,6 +173,7 @@ def main():
     print('\n== check 1: private strings in the public tree ==')
     files = sorted(git(['ls-files'], OUT).splitlines()); hits = []
     for p in files:
+        if p == 'scripts/' + Path(__file__).name: continue  # this script lists the patterns themselves
         b = (OUT / p).read_bytes()
         try: txt = b.decode('utf-8'); binary = False
         except UnicodeDecodeError: txt = b.decode('latin-1'); binary = True
