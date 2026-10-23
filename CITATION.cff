@@ -1,0 +1,30 @@
+cff-version: 1.2.0
+message: "If you use this code or these results, please cite the paper (preferred-citation) and this repository."
+type: software
+title: "Solitary movement style predicts collective foraging while whom to follow emerges only in company"
+abstract: "Analysis code, pre-specified analysis plan, decision log and aggregate results for the paper of the same title (three public datasets of collective foraging: Chirkov et al. 2026, Wu et al. 2025, Hawkins et al. 2023)."
+authors:
+  - family-names: Higashi
+    given-names: Hiroshi
+    email: hgshrs@kansai-u.ac.jp
+    affiliation: Kansai University
+version: 1.0.0
+date-released: "2026-10-23"
+license: MIT
+repository-code: "https://github.com/hgshrs/collective-individuality-transfer"
+# doi: 10.5281/zenodo.XXXXXXX   # add the Zenodo DOI of release v1.0.0 (see RELEASE_STEPS.md)
+keywords:
+  - collective behaviour
+  - collective foraging
+  - individual differences
+  - individuality transfer
+  - agent-based model
+  - social information use
+preferred-citation:
+  type: article
+  title: "Solitary movement style predicts collective foraging while whom to follow emerges only in company"
+  authors:
+    - family-names: Higashi
+      given-names: Hiroshi
+  year: 2026
+  journal: "submitted"

@@ -1,0 +1,20 @@
+Creative Commons Attribution 4.0 International (CC BY 4.0)
+
+Copyright (c) 2026 Hiroshi Higashi
+
+The documents, reports, result tables and figures of this repository, namely
+
+  AGENT_SPEC_COLLECTIVE.md, collective_id_research_plan.md, README.md, RELEASE_STEPS.md,
+  reports/**, results/** (CSV, JSON, Markdown, text, PDF and PNG files), paper/figures/*.pdf,
+  paper/figures/*.png and paper/figures/SIZES.txt,
+
+are licensed under the Creative Commons Attribution 4.0 International License. You are free to
+share and adapt this material for any purpose, provided that you give appropriate credit (cite
+the paper named in README.md and this repository), provide a link to the licence, and indicate
+if changes were made.
+
+Full licence text: https://creativecommons.org/licenses/by/4.0/legalcode
+Human-readable summary: https://creativecommons.org/licenses/by/4.0/
+
+The code of this repository is licensed under the MIT License (see LICENSE). Third-party data
+and code are not included and keep their own licences (see README.md).
